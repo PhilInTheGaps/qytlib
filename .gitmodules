@@ -1,0 +1,3 @@
+[submodule "lib/QGumboParser"]
+	path = lib/QGumboParser
+	url = https://github.com/lagner/QGumboParser
