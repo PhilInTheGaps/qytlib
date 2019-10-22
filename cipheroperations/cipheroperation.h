@@ -10,7 +10,7 @@ public:
 
     virtual ~CipherOperation() {}
 
-    virtual QString decipher(QString input) {}
+    virtual QString decipher(QString input) { return ""; }
 };
 
 #endif // CIPHEROPERATION_H
