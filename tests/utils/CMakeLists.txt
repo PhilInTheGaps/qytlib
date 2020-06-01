@@ -1,0 +1,2 @@
+add_subdirectory(test_stringutils)
+add_subdirectory(test_urlutils)

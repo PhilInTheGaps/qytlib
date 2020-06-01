@@ -97,9 +97,9 @@ public:
 
     QString url() const override;
 
-    QString signature() const override { return cipher().queryItemValue("s"); }
+    QString signature() const override;
 
-    QString signatureParameter() const override { return cipher().queryItemValue("sp"); }
+    QString signatureParameter() const override;
 
     qint64 contentLength() const override;
 
