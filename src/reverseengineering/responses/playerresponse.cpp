@@ -50,7 +50,8 @@ void PlayerResponse::loadMuxedStreams()
 
     for (const auto& format : qAsConst(formats))
     {
-        m_muxedStreams.append(new StreamInfoPR(format.toObject(), this));
+        auto *streamInfo = new StreamInfoPR(format.toObject(), this);
+        if (QString::compare(streamInfo->codecs(), "unknown")) m_muxedStreams.append(streamInfo);
     }
 }
 
@@ -60,7 +61,8 @@ void PlayerResponse::loadAdaptiveStreams()
 
     for (const auto& format : qAsConst(formats))
     {
-        m_adaptiveStreams.append(new StreamInfoPR(format.toObject(), this));
+        auto *streamInfo = new StreamInfoPR(format.toObject(), this);
+        if (QString::compare(streamInfo->codecs(), "unknown")) m_adaptiveStreams.append(streamInfo);
     }
 }
 
@@ -80,14 +82,36 @@ QString StreamInfoPR::url() const
 
     if (!url.isEmpty()) return url;
 
-    return QUrl::fromPercentEncoding(cipher().queryItemValue("url").toUtf8());
+    url = QUrl::fromPercentEncoding(cipher().queryItemValue("url").toUtf8());
+
+    if (!url.isEmpty()) return url;
+
+    return QUrl::fromPercentEncoding(signatureCipher().queryItemValue("url").toUtf8());
+}
+
+QString StreamInfoPR::signature() const
+{
+    auto signature = cipher().queryItemValue("s");
+
+    if (!signature.isEmpty()) return signature;
+
+    return signatureCipher().queryItemValue("s");
+}
+
+QString StreamInfoPR::signatureParameter() const
+{
+    auto parameter = cipher().queryItemValue("sp");
+
+    if (!parameter.isEmpty()) return parameter;
+
+    return signatureCipher().queryItemValue("sp");
 }
 
 qint64 StreamInfoPR::contentLength() const
 {
     auto length = m_root["contentLength"].toString().toLong();
 
-    return length > 0 ? length : RegExUtils::regexMatch(url(), "clen=(\\d+)").toLong();
+    return length > 0 ? length : RegExUtils::regexMatch(url(), R"([\?&]clen=(\d+))").toLong();
 }
 
 QString StreamInfoPR::container() const

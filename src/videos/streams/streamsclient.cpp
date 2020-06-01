@@ -111,19 +111,6 @@ LiveUrl* StreamsClient::getLiveStreamUrl(const Videos::VideoId &videoId)
     return liveUrl;
 }
 
-/// *Not implemented* Gets the actual stream which is identified by the specified metadata.
-void StreamsClient::get(IStreamInfo *streamInfo)
-{
-    // YouTube streams are often rate-limited -- they return data at about the same rate
-    // as the actual video is going. This helps them avoid unnecessary bandwidth by not loading
-    // all data eagerly. On the other hand, we want to download the streams as fast as possible,
-    // so we'll be splitting the stream into small segments and retrieving them separately, to
-    // work around rate limiting.
-
-    // TODO: maybe implement segmented stream
-
-}
-
 /// Try to load stream context from the embedded video page.
 /// If video is not allowed to be embedded, the stream context does
 /// not contain any streams.

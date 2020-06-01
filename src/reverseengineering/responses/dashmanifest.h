@@ -61,7 +61,7 @@ public:
     /// DASH streams don't have signatures
     QString signatureParameter() const override { return ""; }
 
-    qint64 contentLength() const override { return Utils::RegExUtils::regexMatch(url(), "clen[/=](\\d+)").toLong(); }
+    qint64 contentLength() const override { return Utils::RegExUtils::regexMatch(url(), R"([/\?]clen[/=](\d+))").toLong(); }
 
     qint64 bitrate() const override { return m_bitrate; }
 

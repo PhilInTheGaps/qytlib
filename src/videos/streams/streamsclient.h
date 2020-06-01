@@ -40,9 +40,6 @@ public:
     /// The LiveUrl emits LiveUrl::ready() when the url can be read. (Through LiveUrl->url())
     LiveUrl *getLiveStreamUrl(const VideoId& videoId);
 
-    /// Gets the actual stream which is identified by the specified metadata.
-    void get(IStreamInfo *streamInfo);
-
 private:
     QNetworkAccessManager *m_networkManager = nullptr;
 

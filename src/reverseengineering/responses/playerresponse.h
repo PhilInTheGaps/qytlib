@@ -129,6 +129,8 @@ private:
     QJsonObject m_root;
 
     QUrlQuery cipher() const { return QUrlQuery(m_root["cipher"].toString()); }
+
+    QUrlQuery signatureCipher() const { return QUrlQuery(m_root["signatureCipher"].toString()); }
 };
 
 class ClosedCaptionTrackInfoPR : public Videos::CC::IClosedCaptionTrackInfo
