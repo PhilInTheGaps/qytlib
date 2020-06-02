@@ -1,9 +1,9 @@
-#include "playersource.h"
-#include "utils/regexutils.h"
+#include "qytlib/reverseengineering/responses/playersource.h"
+#include "qytlib/utils/regexutils.h"
 
-#include "reverseengineering/cipher/slicecipheroperation.h"
-#include "reverseengineering/cipher/swapcipheroperation.h"
-#include "reverseengineering/cipher/reversecipheroperation.h"
+#include "qytlib/reverseengineering/cipher/slicecipheroperation.h"
+#include "qytlib/reverseengineering/cipher/swapcipheroperation.h"
+#include "qytlib/reverseengineering/cipher/reversecipheroperation.h"
 
 #include <QRegularExpression>
 #include <QNetworkReply>

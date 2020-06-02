@@ -1,6 +1,6 @@
 #include <QtTest>
 #include "tst_urlutils.h"
-#include "utils/urlutils.h"
+#include <qytlib/utils/urlutils.h>
 
 void TestUrlUtils::setQueryParameter_data()
 {

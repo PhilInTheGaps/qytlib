@@ -6,8 +6,8 @@
 
 #include "iresponse.h"
 #include "istreaminfoprovider.h"
-#include "reverseengineering/cipher/icipheroperation.h"
-#include "utils/regexutils.h"
+#include "qytlib/reverseengineering/cipher/icipheroperation.h"
+#include "qytlib/utils/regexutils.h"
 
 Q_DECLARE_LOGGING_CATEGORY(ytDashManifest)
 

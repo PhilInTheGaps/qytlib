@@ -1,5 +1,5 @@
-#include "playerconfig.h"
-#include "streaminfovir.h"
+#include "qytlib/reverseengineering/responses/playerconfig.h"
+#include "qytlib/reverseengineering/responses/streaminfovir.h"
 
 using namespace YouTube::Responses;
 

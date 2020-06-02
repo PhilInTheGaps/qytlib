@@ -2,7 +2,7 @@
 #define IVIDEOSTREAMINFO_H
 
 #include <QString>
-#include "reverseengineering/heuristics.h"
+#include "qytlib/reverseengineering/heuristics.h"
 
 namespace YouTube {
 namespace Videos {

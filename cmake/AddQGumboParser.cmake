@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1.0)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(GUMBO_DIR ${CMAKE_SOURCE_DIR}/thirdparty/QGumboParser/QGumboParser) 
+set(GUMBO_DIR ${CMAKE_CURRENT_LIST_DIR}/../thirdparty/QGumboParser/QGumboParser) 
 
 set(CMAKE_AUTOMOC ON)
 

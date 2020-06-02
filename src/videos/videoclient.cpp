@@ -1,4 +1,4 @@
-#include "videoclient.h"
+#include "qytlib/videos/videoclient.h"
 
 #include <QUrl>
 #include <QNetworkReply>

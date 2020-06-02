@@ -1,5 +1,5 @@
-#include "urlutils.h"
-#include "regexutils.h"
+#include "qytlib/utils/urlutils.h"
+#include "qytlib/utils/regexutils.h"
 
 #include <QRegularExpression>
 #include <QUrl>

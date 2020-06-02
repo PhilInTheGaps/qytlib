@@ -1,6 +1,6 @@
 # qytlib
 
-A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/YoutubeExplode).
+A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/YoutubeExplode) 5.0.5.
 
 ## Usage
 

@@ -8,8 +8,8 @@
 #include "iresponse.h"
 #include "playerresponse.h"
 #include "istreaminfoprovider.h"
-#include "utils/stringutils.h"
-#include "videos/videoid.h"
+#include "qytlib/utils/stringutils.h"
+#include "qytlib/videos/videoid.h"
 
 Q_DECLARE_LOGGING_CATEGORY(ytVideoInfoResponse)
 

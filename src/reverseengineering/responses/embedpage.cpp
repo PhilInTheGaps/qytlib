@@ -1,5 +1,5 @@
-#include "embedpage.h"
-#include "utils/regexutils.h"
+#include "qytlib/reverseengineering/responses/embedpage.h"
+#include "qytlib/utils/regexutils.h"
 
 #include <qgumbodocument.h>
 #include <qgumbonode.h>

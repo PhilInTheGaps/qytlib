@@ -10,8 +10,8 @@
 
 #include "iresponse.h"
 #include "istreaminfoprovider.h"
-#include "utils/stringutils.h"
-#include "videos/closedcaptions/iclosedcaptiontrackinfo.h"
+#include "qytlib/utils/stringutils.h"
+#include "qytlib/videos/closedcaptions/iclosedcaptiontrackinfo.h"
 
 namespace YouTube {
 namespace Responses {

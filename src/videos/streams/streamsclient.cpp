@@ -1,14 +1,14 @@
-#include "streamsclient.h"
-#include "muxedstreaminfo.h"
-#include "videoonlystreaminfo.h"
-#include "audioonlystreaminfo.h"
+#include "qytlib/videos/streams/streamsclient.h"
+#include "qytlib/videos/streams/muxedstreaminfo.h"
+#include "qytlib/videos/streams/videoonlystreaminfo.h"
+#include "qytlib/videos/streams/audioonlystreaminfo.h"
 
-#include "utils/regexutils.h"
-#include "utils/urlutils.h"
+#include "qytlib/utils/regexutils.h"
+#include "qytlib/utils/urlutils.h"
 
-#include "reverseengineering/responses/istreaminfoprovider.h"
-#include "reverseengineering/responses/watchpage.h"
-#include "reverseengineering/heuristics.h"
+#include "qytlib/reverseengineering/responses/istreaminfoprovider.h"
+#include "qytlib/reverseengineering/responses/watchpage.h"
+#include "qytlib/reverseengineering/heuristics.h"
 
 Q_LOGGING_CATEGORY(ytStreamsClient, "yt.videos.streams.client")
 

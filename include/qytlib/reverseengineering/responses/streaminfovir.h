@@ -3,7 +3,7 @@
 
 #include <QUrlQuery>
 #include "istreaminfoprovider.h"
-#include "utils/stringutils.h"
+#include "qytlib/utils/stringutils.h"
 
 namespace YouTube {
 namespace Responses {

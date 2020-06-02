@@ -4,15 +4,15 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 
-#include "videos/videoid.h"
-#include "videos/streams/istreaminfo.h"
+#include "qytlib/videos/videoid.h"
+#include "qytlib/videos/streams/istreaminfo.h"
 
-#include "reverseengineering/responses/istreaminfoprovider.h"
-#include "reverseengineering/responses/dashmanifest.h"
-#include "reverseengineering/responses/embedpage.h"
-#include "reverseengineering/responses/playersource.h"
-#include "reverseengineering/responses/videoinforesponse.h"
-#include "reverseengineering/cipher/icipheroperation.h"
+#include "qytlib/reverseengineering/responses/istreaminfoprovider.h"
+#include "qytlib/reverseengineering/responses/dashmanifest.h"
+#include "qytlib/reverseengineering/responses/embedpage.h"
+#include "qytlib/reverseengineering/responses/playersource.h"
+#include "qytlib/reverseengineering/responses/videoinforesponse.h"
+#include "qytlib/reverseengineering/cipher/icipheroperation.h"
 
 #include "streammanifest.h"
 

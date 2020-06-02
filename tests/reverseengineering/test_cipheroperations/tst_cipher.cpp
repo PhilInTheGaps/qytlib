@@ -2,9 +2,9 @@
 
 #include "tst_cipher.h"
 
-#include "reverseengineering/cipher/reversecipheroperation.h"
-#include "reverseengineering/cipher/slicecipheroperation.h"
-#include "reverseengineering/cipher/swapcipheroperation.h"
+#include <qytlib/reverseengineering/cipher/reversecipheroperation.h>
+#include <qytlib/reverseengineering/cipher/slicecipheroperation.h>
+#include <qytlib/reverseengineering/cipher/swapcipheroperation.h>
 
 void TestCipher::reverse_data()
 {

@@ -1,5 +1,5 @@
-#include "videoid.h"
-#include "utils/regexutils.h"
+#include "qytlib/videos/videoid.h"
+#include "qytlib/utils/regexutils.h"
 
 Q_LOGGING_CATEGORY(ytVideoId, "yt.video.id")
 

@@ -1,9 +1,9 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
-#include "videoid.h"
-#include "common/thumbnailset.h"
-#include "common/engagement.h"
+#include "qytlib/videos/videoid.h"
+#include "qytlib/common/thumbnailset.h"
+#include "qytlib/common/engagement.h"
 
 #include <QObject>
 #include <QDate>

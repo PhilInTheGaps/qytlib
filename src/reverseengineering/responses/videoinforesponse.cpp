@@ -1,6 +1,6 @@
-#include "videoinforesponse.h"
-#include "streaminfovir.h"
-#include "utils/regexutils.h"
+#include "qytlib/reverseengineering/responses/videoinforesponse.h"
+#include "qytlib/reverseengineering/responses/streaminfovir.h"
+#include "qytlib/utils/regexutils.h"
 
 #include <QNetworkReply>
 #include <QUrl>

@@ -1,18 +1,15 @@
 #ifndef WATCHPAGE_H
 #define WATCHPAGE_H
 
-#include <qgumbodocument.h>
-#include <qgumbonode.h>
-
 #include <QObject>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QLoggingCategory>
 #include <QNetworkAccessManager>
 
-#include "playerresponse.h"
 #include "playerconfig.h"
-#include "videos/videoid.h"
+#include "playerresponse.h"
+#include "qytlib/videos/videoid.h"
 
 Q_DECLARE_LOGGING_CATEGORY(ytWatchPage)
 

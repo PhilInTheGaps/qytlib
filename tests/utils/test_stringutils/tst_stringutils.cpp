@@ -1,6 +1,6 @@
 #include <QtTest>
 #include "tst_stringutils.h"
-#include "utils/stringutils.h"
+#include <qytlib/utils/stringutils.h>
 
 void TestStringUtils::substringUntil_data()
 {

@@ -1,7 +1,7 @@
 #include <QtTest>
 
 #include "tst_videoid.h"
-#include "videos/videoid.h"
+#include <qytlib/videos/videoid.h>
 
 void TestVideoId::isValid_data()
 {

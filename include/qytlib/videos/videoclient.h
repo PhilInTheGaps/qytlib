@@ -1,11 +1,11 @@
 #ifndef VIDEOCLIENT_H
 #define VIDEOCLIENT_H
 
-#include "video.h"
-#include "streams/streamsclient.h"
-#include "closedcaptions/closedcaptionclient.h"
-#include "reverseengineering/responses/watchpage.h"
-#include "reverseengineering/responses/videoinforesponse.h"
+#include "qytlib/videos/video.h"
+#include "qytlib/videos/streams/streamsclient.h"
+#include "qytlib/videos/closedcaptions/closedcaptionclient.h"
+#include "qytlib/reverseengineering/responses/watchpage.h"
+#include "qytlib/reverseengineering/responses/videoinforesponse.h"
 
 #include <QNetworkAccessManager>
 #include <QLoggingCategory>

@@ -4,7 +4,7 @@
 #include "videoonlystreaminfo.h"
 #include "audioonlystreaminfo.h"
 #include "muxedstreaminfo.h"
-#include "reverseengineering/responses/iresponse.h"
+#include "qytlib/reverseengineering/responses/iresponse.h"
 
 namespace YouTube {
 namespace Videos {

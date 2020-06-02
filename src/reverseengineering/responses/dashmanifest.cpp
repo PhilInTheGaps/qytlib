@@ -1,7 +1,6 @@
-#include "dashmanifest.h"
-#include "utils/urlutils.h"
+#include "qytlib/reverseengineering/responses/dashmanifest.h"
+#include "qytlib/utils/urlutils.h"
 
-#include <QDebug>
 #include <QNetworkReply>
 #include <QXmlStreamReader>
 

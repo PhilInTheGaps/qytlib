@@ -1,4 +1,4 @@
-#include "heuristics.h"
+#include "qytlib/reverseengineering/heuristics.h"
 #include <QtMath>
 
 Q_LOGGING_CATEGORY(ytHeuristics, "yt.heuristics")

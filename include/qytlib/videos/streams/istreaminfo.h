@@ -7,7 +7,7 @@
 #include "container.h"
 #include "filesize.h"
 #include "bitrate.h"
-#include "utils/regexutils.h"
+#include "qytlib/utils/regexutils.h"
 
 namespace YouTube {
 namespace Videos {

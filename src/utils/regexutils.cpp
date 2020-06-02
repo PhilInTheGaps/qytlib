@@ -1,4 +1,4 @@
-#include "regexutils.h"
+#include "qytlib/utils/regexutils.h"
 
 Q_LOGGING_CATEGORY(ytUtilsRegEx, "yt.utils.regex")
 

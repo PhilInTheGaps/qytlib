@@ -1,7 +1,12 @@
-#include "videoinforesponse.h"
-#include "watchpage.h"
-#include "utils/regexutils.h"
+#include "qytlib/reverseengineering/responses/watchpage.h"
+
 #include <QNetworkReply>
+
+#include <qgumbodocument.h>
+#include <qgumbonode.h>
+
+#include "qytlib/reverseengineering/responses/videoinforesponse.h"
+#include "qytlib/utils/regexutils.h"
 
 Q_LOGGING_CATEGORY(ytWatchPage, "yt.responses.watchpage")
 
@@ -22,6 +27,13 @@ WatchPage *WatchPage::get(QNetworkAccessManager *networkManager, const YouTube::
     auto *reply = networkManager->get(QNetworkRequest(url));
 
     connect(reply, &QNetworkReply::finished, watchPage, [ = ]() {
+        if (reply->error() != QNetworkReply::NoError)
+        {
+            qCWarning(ytWatchPage()) << reply->error() << reply->errorString();
+            reply->deleteLater();
+            return;
+        }
+
         watchPage->parse(reply->readAll());
         reply->deleteLater();
 
@@ -42,6 +54,8 @@ void WatchPage::parse(const QByteArray &raw)
     // Is Ok?
     auto player = root.getElementById("player");
     m_isOk = player.size() == 1;
+
+    if (!m_isOk) qCWarning(ytWatchPage()) << raw;
 
     // Is video available?
     auto meta = root.getElementsByTagName(HtmlTag::META);

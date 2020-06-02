@@ -6,12 +6,80 @@ project(qytlib)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # set cmake module path
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+include(ide)
+include(AddQGumboParser)
+include(GNUInstallDirs)
 
 # turn on automatic invocation of the MOC
 set(CMAKE_AUTOMOC ON)
 
-enable_testing(true)
+if (${CMAKE_VERSION} VERSION_GREATER 3.11)
+  add_compile_definitions(QT_DEPRECATED_WARNINGS)
+endif()
 
-add_subdirectory(src)
-add_subdirectory(tests)
+option(QYTLIB_BUILD_TESTS "Build tests" ON)
+option(QYTLIB_BUILD_DEMO "Build demo application" ON)
+
+find_package(Qt5 REQUIRED COMPONENTS Core Network)
+
+set(QYTLIB_SOURCES
+  src/common/engagement.cpp
+  src/reverseengineering/cipher/reversecipheroperation.cpp
+  src/reverseengineering/cipher/slicecipheroperation.cpp
+  src/reverseengineering/cipher/swapcipheroperation.cpp
+  src/reverseengineering/responses/dashmanifest.cpp
+  src/reverseengineering/responses/embedpage.cpp
+  src/reverseengineering/responses/playerconfig.cpp
+  src/reverseengineering/responses/playerresponse.cpp
+  src/reverseengineering/responses/playersource.cpp
+  src/reverseengineering/responses/streaminfovir.cpp
+  src/reverseengineering/responses/videoinforesponse.cpp
+  src/reverseengineering/responses/watchpage.cpp
+  src/reverseengineering/heuristics.cpp
+  src/utils/regexutils.cpp
+  src/utils/stringutils.cpp
+  src/utils/urlutils.cpp
+  src/videos/closedcaptions/closedcaptionclient.cpp
+  src/videos/streams/bitrate.cpp
+  src/videos/streams/filesize.cpp
+  src/videos/streams/streammanifest.cpp
+  src/videos/streams/streamsclient.cpp
+  src/videos/videoclient.cpp
+  src/videos/videoid.cpp
+)
+
+add_library(qytlib STATIC ${QYTLIB_SOURCES} ${QYTLIB_HEADERS})
+
+target_include_directories(qytlib
+  PUBLIC
+  "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
+  "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+  PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/thirdparty/QGumboParser/QGumboParser
+)
+
+target_link_libraries(qytlib Qt5::Core Qt5::Network qgumboparser)
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(
+  TARGETS qytlib
+  EXPORT qytlib
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+# tests
+
+if (QYTLIB_BUILD_TESTS)
+  enable_testing(true)
+  add_subdirectory(tests)
+endif()
+
+# demo application
+
+if (QYTLIB_BUILD_DEMO)
+  add_subdirectory(demo)
+endif()

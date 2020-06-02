@@ -1,4 +1,4 @@
-#include "bitrate.h"
+#include "qytlib/videos/streams/bitrate.h"
 #include <QtMath>
 
 using namespace YouTube::Videos::Streams;

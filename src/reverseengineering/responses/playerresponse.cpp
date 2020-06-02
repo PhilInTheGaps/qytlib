@@ -1,5 +1,5 @@
-#include "playerresponse.h"
-#include "utils/regexutils.h"
+#include "qytlib/reverseengineering/responses/playerresponse.h"
+#include "qytlib/utils/regexutils.h"
 
 using namespace YouTube::Responses;
 using namespace YouTube::Utils;

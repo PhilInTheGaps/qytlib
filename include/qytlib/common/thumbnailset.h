@@ -1,7 +1,7 @@
 #ifndef THUMBNAILSET_H
 #define THUMBNAILSET_H
 
-#include "videos/videoid.h"
+#include "qytlib/videos/videoid.h"
 #include <QString>
 
 namespace YouTube {

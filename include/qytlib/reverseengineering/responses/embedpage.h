@@ -3,7 +3,7 @@
 
 #include "iresponse.h"
 #include "playerconfig.h"
-#include "videos/videoid.h"
+#include "qytlib/videos/videoid.h"
 #include <QLoggingCategory>
 #include <QNetworkAccessManager>
 

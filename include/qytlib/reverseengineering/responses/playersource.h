@@ -5,8 +5,8 @@
 #include <QNetworkAccessManager>
 
 #include "iresponse.h"
-#include "utils/regexutils.h"
-#include "reverseengineering/cipher/icipheroperation.h"
+#include "qytlib/utils/regexutils.h"
+#include "qytlib/reverseengineering/cipher/icipheroperation.h"
 
 Q_DECLARE_LOGGING_CATEGORY(ytPlayerSource);
 
