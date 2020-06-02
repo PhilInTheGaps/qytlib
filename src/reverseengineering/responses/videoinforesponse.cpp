@@ -9,11 +9,6 @@ Q_LOGGING_CATEGORY(ytVideoInfoResponse, "yt.response.videoinfo");
 
 using namespace YouTube::Responses;
 
-VideoInfoResponse::VideoInfoResponse(const QByteArray &raw, QObject *parent) : IResponse(parent)
-{   
-    parse(raw);
-}
-
 VideoInfoResponse *VideoInfoResponse::get(QNetworkAccessManager *networkManager, const YouTube::Videos::VideoId &videoId, const QString &sts, QObject *parent)
 {
     qCDebug(ytVideoInfoResponse()) << "Getting info response for video" << videoId << "sts:" << sts;
@@ -26,16 +21,16 @@ VideoInfoResponse *VideoInfoResponse::get(QNetworkAccessManager *networkManager,
     auto *reply = networkManager->get(QNetworkRequest(url));
 
     connect(reply, &QNetworkReply::finished, response, [ = ]() {
-        auto raw = reply->readAll();
-        reply->deleteLater();
-
-        response->parse(raw);
-
-        if (!response->isVideoAvailable() || !response->playerResponse()->isVideoAvailable())
+        if (reply->error() != QNetworkReply::NoError)
         {
-            qCWarning(ytVideoInfoResponse()) << "Error: video" << videoId << "is not available!";
+            qCWarning(ytVideoInfoResponse()) << "VideoInfoResponse::get():" << reply->error() << reply->errorString();
+            reply->deleteLater();
             return;
         }
+
+        auto raw = reply->readAll();
+        reply->deleteLater();
+        response->parse(raw);
     });
 
     return response;
@@ -45,7 +40,10 @@ void VideoInfoResponse::parse(const QByteArray &raw)
 {
     m_root = QUrlQuery(raw);
 
-    auto playerResponseRaw = QUrl::fromPercentEncoding(m_root.queryItemValue("player_response").toUtf8());
+    // We need to replace '+' with spaces manually.
+    // All actual plus signs are percent encoded, so we don't replace them by accident.
+    auto playerResponseEncoded = m_root.queryItemValue("player_response").replace('+', ' ').toUtf8();
+    auto playerResponseRaw = QUrl::fromPercentEncoding(playerResponseEncoded);
     auto playerResponseJson = QJsonDocument::fromJson(playerResponseRaw.toUtf8()).object();
     m_playerResponse = new PlayerResponse(playerResponseJson, this);
 

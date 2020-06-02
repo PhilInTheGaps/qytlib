@@ -40,8 +40,6 @@ public:
     QVector<IStreamInfoProvider*> streams() const { return m_muxedStreams + m_adaptiveStreams; }
 
 private:
-    explicit VideoInfoResponse(const QByteArray &raw, QObject *parent = nullptr);
-
     QUrlQuery m_root;
     PlayerResponse* m_playerResponse = nullptr;
 

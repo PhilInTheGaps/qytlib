@@ -29,6 +29,19 @@ Video* VideoClient::getVideo(const VideoId &videoId)
         auto *watchPage = Responses::WatchPage::get(m_networkManager, videoId, this);
 
         connect(watchPage, &Responses::WatchPage::ready, this, [ = ]() {
+            qCDebug(ytVideoClient()) << "VideoClient::getVideo(): Received parsed watch page.";
+
+            if (!videoInfoResponse->isVideoAvailable()
+                    || !videoInfoResponse->playerResponse()->isVideoAvailable()
+                    || !videoInfoResponse->playerResponse()->isVideoPlayable())
+            {
+                qCWarning(ytVideoClient()) << "Error: video" << videoId << "is not available or playable!";
+            }
+            else
+            {
+                video->setIsAvailable(true);
+            }
+
             auto playerResponse = videoInfoResponse->playerResponse();
 
             auto *engagement = new Common::Engagement(

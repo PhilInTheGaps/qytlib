@@ -29,7 +29,8 @@ class Video : public QObject
     Q_OBJECT
 
 public:
-    explicit Video(const VideoId& id, QObject *parent = nullptr) : QObject(parent), m_id(id) {}
+    explicit Video(const VideoId& id, QObject *parent = nullptr)
+        : QObject(parent), m_id(id), m_thumbnails(new ThumbnailSet(id, this)) {}
 
     operator const QString() const { return QString("Video (%1 - %2)").arg(m_title, m_author); }
 
@@ -59,7 +60,7 @@ public:
     QString description() const { return m_description; }
     void setDescription(const QString& description) { m_description = description; emit descriptionChanged(); }
 
-    /// Duration of the video.
+    /// Duration of the video in seconds.
     Q_PROPERTY(qint64 duration READ duration WRITE setDuration NOTIFY durationChanged)
     qint64 duration() const { return m_duration; }
     void setDuration(const qint64& duration) { m_duration = duration; emit durationChanged(); }
@@ -79,10 +80,15 @@ public:
     Common::Engagement* engagement() const { return m_engagement; }
     void setEngagement(Common::Engagement *engagement) { m_engagement = engagement; m_engagement->setParent(this); emit engagementChanged(); }
 
-    /// Is video ready to be read
+    /// Is video ready to be read?
     Q_PROPERTY(bool isReady READ isReady WRITE setIsReady NOTIFY isReadyChanged)
     bool isReady() const { return m_isReady; }
     void setIsReady(const bool& isReady) { m_isReady = isReady; emit isReadyChanged(); if (m_isReady) emit ready(); }
+
+    /// Is video available?
+    Q_PROPERTY(bool isAvailable READ isAvailable WRITE setIsAvailable NOTIFY isAvailableChanged)
+    bool isAvailable() const { return m_isAvailable; }
+    void setIsAvailable(bool isAvailable) { m_isAvailable = isAvailable; emit isAvailableChanged(); }
 
 signals:
     /// Emitted when video data has finished loading and can be read.
@@ -97,10 +103,12 @@ signals:
     void thumbnailsChanged();
     void keywordsChanged();
     void engagementChanged();
+    void isAvailableChanged();
 
 private:
     VideoId m_id;
     bool m_isReady = false;
+    bool m_isAvailable = false;
 
     QString m_title;
     QString m_author;

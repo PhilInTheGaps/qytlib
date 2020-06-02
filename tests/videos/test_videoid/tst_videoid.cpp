@@ -52,6 +52,9 @@ void TestVideoId::normalize()
     QFETCH(QString, input);
     QFETCH(QString, output);
 
+    if (QString(QTest::currentDataTag()).startsWith("invalid"))
+        QTest::ignoreMessage(QtWarningMsg, QRegularExpression(".*normalize().*"));
+
     QCOMPARE(YouTube::Videos::VideoId::normalize(input), output);
 }
 

@@ -36,7 +36,7 @@ public:
 
     bool isVideoPlayable() const { return !QString::compare(videoPlayabilityStatus(), "ok", Qt::CaseInsensitive); }
 
-    QString videoTitle() const { return videoDetails()["title"].toString().replace('+', ' '); }
+    QString videoTitle() const { return videoDetails()["title"].toString(); }
 
     QString videoAuthor() const { return videoDetails()["author"].toString(); }
 
@@ -44,13 +44,13 @@ public:
 
     QString videoChannelId() const { return videoDetails()["channelId"].toString(); }
 
-    qint64 videoDuration() const { return videoDetails()["lengthSeconds"].toString().toInt(); }
+    qint64 videoDuration() const { return videoDetails()["lengthSeconds"].toString().toLongLong(); }
 
     QStringList keywords() const;
 
     QString description() const { return videoDetails()["shortDescription"].toString(); }
 
-    qint64 videoViewCount() const { return videoDetails()["viewCount"].toInt(); }
+    qint64 videoViewCount() const { return videoDetails()["viewCount"].toString().toLongLong(); }
 
     QString previewVideoId() const;
 
