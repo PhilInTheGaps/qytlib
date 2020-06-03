@@ -4,23 +4,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - uses: docker://lpenz/ghaction-cmake:latest
-      with:
-        dependencies_debian: 'qt5-default, qt5base5-dev-tools, libtinyxml2-dev'
-
-  coveralls:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - uses: docker://lpenz/ghaction-cmake:latest
+      - name: Get Qt
+        uses: jurplel/install-qt-action@v2
+        
+      - name: Install other dependencies
+        run: sudo apt-get install cmake tinyxml2-dev
+        
+      - name: Checkout Git
+      - uses: actions/checkout@v2
         with:
-          preset: coverage
-      # ghaction-cmake works well with the github action
-      # provided by coveralls if you pass path-to-lcov:
-      - uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.COVERALLS_TOKEN }}
-          path-to-lcov: lcov.info
+          submodules: true
+      
+      - name: Setup build directory
+        run: mkdir build && cd build
+      
+      - name: Run CMake
+      - run: cmake .. -G "Unix Makefiles"
+      
+      - name: Make
+        run: make -j$(nproc)
+      
+      - name: Make Test
+        run: make test
