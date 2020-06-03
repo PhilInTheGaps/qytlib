@@ -8,7 +8,7 @@ jobs:
         uses: jurplel/install-qt-action@v2
         
       - name: Install other dependencies
-        run: sudo apt-get install cmake tinyxml2-dev
+        run: sudo apt-get install cmake libtinyxml2-dev
         
       - name: Checkout Git
         uses: actions/checkout@v2
