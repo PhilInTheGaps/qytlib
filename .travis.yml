@@ -1,0 +1,56 @@
+language: cpp
+jobs:
+  include:
+  - os: linux
+    compiler: gcc
+    dist: bionic
+    script:
+    - mkdir build
+    - cd build
+    - cmake .. -G "Unix Makefiles"
+    - cd ..
+    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/
+    - make test
+    - sonar-scanner
+  - os: linux
+    compiler: gcc
+    dist: xenial
+    script:
+    - mkdir build
+    - cd build
+    - cmake .. -G "Unix Makefiles"
+    - make -j$(nproc)
+    - make test
+  - os: osx
+    before_install:
+    - brew link qt --force
+    script:
+    - mkdir build
+    - cd build
+    - cmake .. -G "Unix Makefiles"
+    - make -j$(sysctl -n hw.physicalcpu)
+    - make test
+addons:
+  apt:
+    update: true
+    packages:
+    - qt5-default
+    - qtbase5-dev-tools
+    - libtinyxml2-dev
+  homebrew:
+    update: true
+    packages:
+    - qt
+    - tinyxml2
+  sonarcloud:
+    organization: "rophil"
+    token:
+      secure: hAFgwHe1HWD2vr8ITGxdEWzfw258d/fL29mLMnCQCG++vpDT2bJXM9Eymn4yCAA671yDLd20/AzPo1iVsX1bJ/QULI53eqa1oml47AJnFPYxkvSDkrFirx/yTt9Bg8W4FJpoE1o6QW4XSB6LTjV0WTcj+c8A2ZzDYXUVS90d5DMudx+lw/QaI7GsPc483ty+nX6DtL+qW9ddvnScXdpkXAYJrZKnf26/558mR7hohvr5u+sutIo953CG05O2OCxno0uFblSWwNjrhPrUhBtqJofB39H2SN9GovYBn+ITH/UP31x6LFl9VPrchc+hO278vtSo7HN6T8+XMgksaCX/A3UWd6pp+cR6VcpJC1EluJmTSi3uDG6XaApdkNAt/hXXsheBUMX5xUZDRCPMk5elSF36hTJSFbeqAj3AZ/5HKVliGY6EfsOX23QOQaB/7tCwwhkSC+TTGEIv4MTOXkOXFGdUseNx3cf8n3Lup2+1cd08195ozxDVVHJnZ13A43KQm4TkR26ObgwstOWiXXPwITChhelEw+QFkWpSy395TDGBsOkRwEzcEu49mOYfBz+FQmuvWxZ7QeuacmXlxD4f/+fO/UUyBnTHeuTPZm+S5V10LE7U2rIyhNqGAJT9vQBjc7dr6Ek/x5EBii2KUGvBUeCdO8jgy9ueLyR1yCmx/5Y=
+notifications:
+  email:
+    recipients:
+    - phil.hoffmann@zoho.eu
+    on_success: never
+    on_failure: always
+
+  

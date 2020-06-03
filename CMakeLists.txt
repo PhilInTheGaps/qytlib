@@ -11,6 +11,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ide)
 include(AddQGumboParser)
 include(GNUInstallDirs)
+include(CTest)
 
 # turn on automatic invocation of the MOC
 set(CMAKE_AUTOMOC ON)
