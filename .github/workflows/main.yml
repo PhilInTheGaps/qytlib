@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      - COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
     steps:
       - name: Get Qt
         uses: jurplel/install-qt-action@v2
