@@ -2,7 +2,7 @@
 #include "qytlib/utils/urlutils.h"
 
 #include <QNetworkReply>
-#include <QXmlStreamReader>
+#include <tinyxml2.h>
 
 Q_LOGGING_CATEGORY(ytDashManifest, "yt.responses.dashmanifest")
 
@@ -43,67 +43,75 @@ DashManifest *DashManifest::get(QNetworkAccessManager *networkManager, const QSt
 
 void DashManifest::parse(const QByteArray &raw)
 {
-    QXmlStreamReader xml(raw);
+    qCDebug(ytDashManifest()) << "DashManifest::parse()";
 
-    auto streamIndex = -1;
-    StreamInfoDM *streamInfo = nullptr;
+    tinyxml2::XMLDocument doc;
+    auto result = doc.Parse(raw);
 
-    while (!xml.atEnd())
+    if (result != tinyxml2::XML_SUCCESS)
     {
-        auto tokenType = xml.readNext();
-
-        if (tokenType == QXmlStreamReader::StartElement)
-        {
-            // Find element "Representation" and add StreamInfo
-            if (xml.name() == "Representation")
-            {
-                auto id = xml.attributes().value("id").toInt();
-                auto bitrate = xml.attributes().value("bandwidth").toLong();
-                auto codecs = xml.attributes().value("codecs").toString();
-                auto width = xml.attributes().value("width").toInt();
-                auto height = xml.attributes().value("height").toInt();
-                auto framerate = xml.attributes().value("frameRate").toInt();
-
-                m_streams.append(new StreamInfoDM(id, bitrate, codecs, width, height, framerate, this));
-                streamInfo = qobject_cast<StreamInfoDM*>(m_streams[++streamIndex]);
-
-                qDebug() << "Adding new stream info" << streamIndex << streamInfo->codecs();
-            }
-            else if (streamInfo)
-            {
-                if (xml.name() == "Initialization")
-                {
-                    auto sourceUrl = xml.attributes().value("sourceURL");
-
-                    // If sourceURL contains "sq/" then remove streaminfo.
-                    // I don't know why, but YouTube Explode does it, so there must be a reason.
-                    if (sourceUrl.isEmpty() || sourceUrl.contains("sq/"))
-                    {
-                        qDebug() << " Removing dash stream, it's invalid:" << sourceUrl << streamIndex;
-                        m_streams.takeAt(streamIndex--)->deleteLater();
-                        streamInfo = nullptr;
-                    }
-                }
-                else if (xml.name() == "BaseURL")
-                {
-                    streamInfo->setUrl(xml.readElementText());
-                }
-                else if (xml.name() == "AudioChannelConfiguration")
-                {
-                    streamInfo->setIsAudioOnly(true);
-                }
-            }
-        }
-        else if (tokenType == QXmlStreamReader::EndElement)
-        {
-            if (xml.name() == "Representation")
-            {
-                streamInfo = nullptr;
-            }
-        }
+        qCWarning(ytDashManifest()) << "Error: Could not parse raw xml.";
+        emit ready();
+        return;
     }
 
-    qDebug() << "FOUND" << m_streams.length() << "DASH STREAMS";
+    auto *representation = doc.FirstChildElement("Representation");
+
+    while (representation)
+    {
+        auto *streamInfo = new StreamInfoDM(
+                    QString(representation->Attribute("id")).toInt(),
+                    QString(representation->Attribute("bandwidth")).toLongLong(),
+                    QString(representation->Attribute("codecs")),
+                    QString(representation->Attribute("width")).toInt(),
+                    QString(representation->Attribute("height")).toInt(),
+                    QString(representation->Attribute("frameRate")).toInt(),
+                    this);
+
+        auto *initialization = representation->FirstChildElement("Initialization");
+
+        if (initialization)
+        {
+            auto sourceUrl = QString(initialization->Attribute("sourceURL"));
+
+            // If sourceURL contains "sq/" then remove streaminfo.
+            // I don't know why, but YouTube Explode does it, so there must be a reason.
+            if (sourceUrl.isEmpty() || sourceUrl.contains("sq/"))
+            {
+                qCDebug(ytDashManifest()) << " Destroying dash stream, it's invalid:" << sourceUrl;
+                streamInfo->deleteLater();
+            }
+            else
+            {
+                auto *baseUrl = representation->FirstChildElement("BaseURL");
+
+                if (baseUrl)
+                {
+                    streamInfo->setUrl(baseUrl->GetText());
+                }
+                else
+                {
+                    qCWarning(ytDashManifest()) << "DashManifest::parse(): Error: Could not read BaseURL XML element.";
+                }
+
+                auto *audioChannelConfig = representation->FirstChildElement("AudioChannelConfiguration");
+
+                if (audioChannelConfig) streamInfo->setIsAudioOnly(true);
+
+                qCDebug(ytDashManifest()) << "DashManifest::parse(): Adding new stream info" << streamInfo->codecs();
+                m_streams.append(streamInfo);
+            }
+        }
+        else
+        {
+            qCWarning(ytDashManifest()) << "DashManifest::parse(): Error, could not find \"Initialization\" XML element.";
+            streamInfo->deleteLater();
+        }
+
+        representation = representation->NextSiblingElement("Representation");
+    }
+
+    qCDebug(ytDashManifest()) << "DashManifest::parse(): Found" << m_streams.length() << "dash streams.";
 
     emit ready();
 }

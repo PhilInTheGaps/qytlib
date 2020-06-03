@@ -11,7 +11,7 @@
 #include "iresponse.h"
 #include "istreaminfoprovider.h"
 #include "qytlib/utils/stringutils.h"
-#include "qytlib/videos/closedcaptions/iclosedcaptiontrackinfo.h"
+#include "qytlib/videos/closedcaptions/closedcaptiontrackinfo.h"
 
 namespace YouTube {
 namespace Responses {
@@ -66,7 +66,7 @@ public:
 
     QVector<IStreamInfoProvider*> streams() const { return m_muxedStreams + m_adaptiveStreams; }
 
-    QVector<Videos::CC::IClosedCaptionTrackInfo*> closedCaptionTracks() const { return m_closedCaptionTracks; }
+    const QVector<Videos::CC::ClosedCaptionTrackInfo*> closedCaptionTracks() const { return m_closedCaptionTracks; }
 
 private:
     QJsonObject m_root;
@@ -78,7 +78,7 @@ private:
 
     QVector<IStreamInfoProvider*> m_muxedStreams;
     QVector<IStreamInfoProvider*> m_adaptiveStreams;
-    QVector<Videos::CC::IClosedCaptionTrackInfo*> m_closedCaptionTracks;
+    QVector<Videos::CC::ClosedCaptionTrackInfo*> m_closedCaptionTracks;
 
     void loadMuxedStreams();
     void loadAdaptiveStreams();
@@ -133,10 +133,10 @@ private:
     QUrlQuery signatureCipher() const { return QUrlQuery(m_root["signatureCipher"].toString()); }
 };
 
-class ClosedCaptionTrackInfoPR : public Videos::CC::IClosedCaptionTrackInfo
+class ClosedCaptionTrackInfoPR : public Videos::CC::ClosedCaptionTrackInfo
 {
 public:
-    ClosedCaptionTrackInfoPR(const QJsonObject& root, QObject *parent) : Videos::CC::IClosedCaptionTrackInfo(parent), m_root(root) {}
+    ClosedCaptionTrackInfoPR(const QJsonObject& root, QObject *parent) : Videos::CC::ClosedCaptionTrackInfo(parent), m_root(root) {}
 
     QString url() const override { return m_root["baseUrl"].toString(); }
 

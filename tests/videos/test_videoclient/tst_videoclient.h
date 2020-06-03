@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QNetworkAccessManager>
+#include <qytlib/videos/videoclient.h>
 
 class TestVideoClient : public QObject
 {
@@ -14,6 +15,7 @@ public:
 
 private:
     QNetworkAccessManager *networkManager = nullptr;
+    YouTube::Videos::VideoClient *client = nullptr;
 
 private slots:
     void initTestCase();

@@ -15,14 +15,15 @@ void PlayerResponse::parse(const QJsonObject &root)
     m_root = root;
     loadMuxedStreams();
     loadAdaptiveStreams();
+    loadClosedCaptionTracks();
 }
 
 QStringList PlayerResponse::keywords() const
 {
     QStringList keywords;
-    auto keywordsJson = videoDetails()["keywords"].toArray();
+    const auto keywordsJson = videoDetails()["keywords"].toArray();
 
-    for (const auto& keyword : qAsConst(keywordsJson))
+    for (const auto& keyword : keywordsJson)
     {
         keywords.append(keyword.toString());
     }
@@ -46,9 +47,9 @@ QString PlayerResponse::previewVideoId() const
 
 void PlayerResponse::loadMuxedStreams()
 {
-    auto formats = streamingData()["formats"].toArray();
+    const auto formats = streamingData()["formats"].toArray();
 
-    for (const auto& format : qAsConst(formats))
+    for (const auto& format : formats)
     {
         auto *streamInfo = new StreamInfoPR(format.toObject(), this);
         if (QString::compare(streamInfo->codecs(), "unknown")) m_muxedStreams.append(streamInfo);
@@ -57,9 +58,9 @@ void PlayerResponse::loadMuxedStreams()
 
 void PlayerResponse::loadAdaptiveStreams()
 {
-    auto formats = streamingData()["adaptiveFormats"].toArray();
+    const auto formats = streamingData()["adaptiveFormats"].toArray();
 
-    for (const auto& format : qAsConst(formats))
+    for (const auto& format : formats)
     {
         auto *streamInfo = new StreamInfoPR(format.toObject(), this);
         if (QString::compare(streamInfo->codecs(), "unknown")) m_adaptiveStreams.append(streamInfo);
@@ -68,9 +69,9 @@ void PlayerResponse::loadAdaptiveStreams()
 
 void PlayerResponse::loadClosedCaptionTracks()
 {
-    auto tracks = m_root["captions"].toObject()["playerCaptionsTracklistRenderer"].toObject()["captionTracks"].toArray();
+    const auto tracks = m_root["captions"].toObject()["playerCaptionsTracklistRenderer"].toObject()["captionTracks"].toArray();
 
-    for (const auto& track : qAsConst(tracks))
+    for (const auto& track : tracks)
     {
         m_closedCaptionTracks.append(new ClosedCaptionTrackInfoPR(track.toObject(), this));
     }

@@ -12,7 +12,7 @@ VideoClient::VideoClient(QNetworkAccessManager *networkManager, QObject *parent)
     : QObject(parent), m_networkManager(networkManager)
 {
     m_streamsClient = new Streams::StreamsClient(networkManager, this);
-    m_closedCaptionsClient = new CC::ClosedCaptionClient(this);
+    m_closedCaptionsClient = new CC::ClosedCaptionClient(networkManager, this);
 }
 
 Video* VideoClient::getVideo(const VideoId &videoId)

@@ -7,7 +7,13 @@ A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/Yo
 ### Getting metadata of a video
 
 ```c++
+#include <qytlib/videos/videoclient.h>
+
+// ...
+
 auto *networkManager = new QNetworkAccessManager;
+networkManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+
 auto *client = new YouTube::Videos::VideoClient(manager);
 
 // Video ID or URL
@@ -34,5 +40,4 @@ How much of the YoutubeExplode library is implemented in qytlib.
 - [ ] ReverseEngineering
 	- Todo: Responses for Playlist and Channel
 - [ ] Search
-- [ ] Videos
-	- Todo: Closed Captions
+- [x] Videos

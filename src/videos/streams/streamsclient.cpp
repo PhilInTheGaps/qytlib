@@ -253,9 +253,9 @@ void StreamsClient::loadManifest(StreamManifest *streamManifest, StreamContext *
 
      // To make sure there are no duplicates streams, group them by tag
     QMap<int, IStreamInfo*> streams;
-    auto providers = streamContext->streamInfoProviders();
+    const auto providers = streamContext->streamInfoProviders();
 
-    for (const auto& streamInfo : qAsConst(providers))
+    for (const auto& streamInfo : providers)
     {
         auto tag = streamInfo->tag();
         auto url = streamInfo->url();

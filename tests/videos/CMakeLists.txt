@@ -1,2 +1,3 @@
 add_subdirectory(test_videoid)
 add_subdirectory(test_videoclient)
+add_subdirectory(test_closedcaptionclient)

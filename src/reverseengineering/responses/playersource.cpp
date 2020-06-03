@@ -70,10 +70,10 @@ void PlayerSource::loadCipherOperations()
     qCDebug(ytPlayerSource()) << "m_deciphererFuncBody" << m_deciphererFuncBody;
     qCDebug(ytPlayerSource()) << "m_deciphererDefinitionBody" << m_deciphererDefinitionBody;
 
-    auto statements = m_deciphererFuncBody.split(';');
+    const auto statements = m_deciphererFuncBody.split(';');
 
     // Analyze statements to determine cipher function names
-    for (const auto& statement : qAsConst(statements))
+    for (const auto& statement : statements)
     {
         // Get the name of the function called in this statement
         auto calledFuncName = Utils::RegExUtils::regexMatch(statement, "\\w+(?:.|\\[)(\\\"?\\w+(?:\\\")?)\\]?\\(");

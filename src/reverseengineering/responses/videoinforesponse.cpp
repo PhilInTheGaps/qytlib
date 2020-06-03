@@ -55,9 +55,9 @@ void VideoInfoResponse::parse(const QByteArray &raw)
 
 void VideoInfoResponse::loadMuxedStreams()
 {
-    auto infos = m_root.queryItemValue("url_encoded_fmt_stream_map").split(',');
+    const auto infos = m_root.queryItemValue("url_encoded_fmt_stream_map").split(',');
 
-    for (const auto &info : qAsConst(infos))
+    for (const auto &info : infos)
     {
         m_muxedStreams.append(new StreamInfoVIR(QUrlQuery(info), this));
     }
@@ -65,9 +65,9 @@ void VideoInfoResponse::loadMuxedStreams()
 
 void VideoInfoResponse::loadAdaptiveStreams()
 {
-    auto infos = m_root.queryItemValue("adaptive_fmts").split(',');
+    const auto infos = m_root.queryItemValue("adaptive_fmts").split(',');
 
-    for (const auto &info : qAsConst(infos))
+    for (const auto &info : infos)
     {
         m_adaptiveStreams.append(new StreamInfoVIR(QUrlQuery(info), this));
     }

@@ -66,10 +66,10 @@ public:
 
     void setReady() { emit ready(); }
 
-    QVector<Responses::IStreamInfoProvider*> streamInfoProviders() const { return m_streamInfoProviders; }
+    const QVector<Responses::IStreamInfoProvider*> streamInfoProviders() const { return m_streamInfoProviders; }
     void setStreamInfoProviders(const QVector<Responses::IStreamInfoProvider*> providers);
 
-    QVector<Cipher::ICipherOperation*> cipherOperations() const { return m_cipherOperations; }
+    const QVector<Cipher::ICipherOperation*> cipherOperations() const { return m_cipherOperations; }
     void setCipherOperations(QVector<Cipher::ICipherOperation*> operations);
 
 private:

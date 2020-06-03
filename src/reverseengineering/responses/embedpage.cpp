@@ -38,7 +38,7 @@ void EmbedPage::parse(const QByteArray &raw)
     auto doc = QGumboDocument::parse(raw);
     auto root = doc.rootNode();
 
-    auto scripts = root.getElementsByTagName(HtmlTag::SCRIPT);
+    const auto scripts = root.getElementsByTagName(HtmlTag::SCRIPT);
 
     for (const auto& tag : scripts)
     {

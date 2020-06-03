@@ -23,12 +23,14 @@ option(QYTLIB_BUILD_TESTS "Build tests" ON)
 option(QYTLIB_BUILD_DEMO "Build demo application" ON)
 
 find_package(Qt5 REQUIRED COMPONENTS Core Network)
+find_library(TINYXML_DIR tinyxml2 REQUIRED)
 
 set(QYTLIB_SOURCES
   src/common/engagement.cpp
   src/reverseengineering/cipher/reversecipheroperation.cpp
   src/reverseengineering/cipher/slicecipheroperation.cpp
   src/reverseengineering/cipher/swapcipheroperation.cpp
+  src/reverseengineering/responses/closedcaptiontrackresponse.cpp
   src/reverseengineering/responses/dashmanifest.cpp
   src/reverseengineering/responses/embedpage.cpp
   src/reverseengineering/responses/playerconfig.cpp
@@ -42,6 +44,8 @@ set(QYTLIB_SOURCES
   src/utils/stringutils.cpp
   src/utils/urlutils.cpp
   src/videos/closedcaptions/closedcaptionclient.cpp
+  src/videos/closedcaptions/closedcaptionmanifest.cpp
+  src/videos/closedcaptions/closedcaptiontrack.cpp
   src/videos/streams/bitrate.cpp
   src/videos/streams/filesize.cpp
   src/videos/streams/streammanifest.cpp
@@ -60,7 +64,7 @@ target_include_directories(qytlib
   ${CMAKE_CURRENT_LIST_DIR}/thirdparty/QGumboParser/QGumboParser
 )
 
-target_link_libraries(qytlib Qt5::Core Qt5::Network qgumboparser)
+target_link_libraries(qytlib Qt5::Core Qt5::Network qgumboparser tinyxml2)
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(
