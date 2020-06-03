@@ -1,3 +1,6 @@
 [submodule "src/lib/QGumboParser"]
 	path = thirdparty/QGumboParser
 	url = https://github.com/lagner/QGumboParser
+[submodule "cmake/coveralls"]
+	path = cmake/coveralls
+	url = https://github.com/JoakimSoderberg/coveralls-cmake

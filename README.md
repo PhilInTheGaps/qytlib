@@ -1,6 +1,7 @@
 # qytlib
 
 ![CI](https://github.com/PhilInTheGaps/qytlib/workflows/CI/badge.svg)
+[![Coverage](https://coveralls.io/repos/github/PhilInTheGaps/qytlib/badge.svg?branch=master)](https://coveralls.io/github/PhilInTheGaps/qytlib?branch=master)
 
 A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/YoutubeExplode) 5.0.5.
 

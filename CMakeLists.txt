@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.4.0)
 
 project(qytlib)
 
@@ -22,6 +22,13 @@ endif()
 
 option(QYTLIB_BUILD_TESTS "Build tests" ON)
 option(QYTLIB_BUILD_DEMO "Build demo application" ON)
+option(COVERALLS "Turn on coveralls support" OFF)
+option(COVERALLS_UPLOAD "Upload the generated coveralls json" ON)
+
+if (COVERALLS)
+	include(coveralls/cmake/Coveralls)
+	coveralls_turn_on_coverage()
+endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Core Network)
 find_library(TINYXML_DIR tinyxml2 REQUIRED)
@@ -81,6 +88,16 @@ install(
 if (QYTLIB_BUILD_TESTS)
   enable_testing(true)
   add_subdirectory(tests)
+endif()
+
+# coveralls report
+
+if (COVERALLS)
+	coveralls_setup(
+    "${QYTLIB_SOURCES}" 
+    ${COVERALLS_UPLOAD}                 
+    # "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake"
+  )
 endif()
 
 # demo application
