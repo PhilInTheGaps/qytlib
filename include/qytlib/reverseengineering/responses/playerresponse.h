@@ -7,6 +7,7 @@
 #include <QDate>
 #include <QVariant>
 #include <QUrlQuery>
+#include <QVector>
 
 #include "iresponse.h"
 #include "istreaminfoprovider.h"

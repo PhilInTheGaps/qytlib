@@ -69,16 +69,16 @@ bool ClosedCaptionClient::writeToDevice(ClosedCaptionTrack *track, QIODevice *de
     for (const auto *caption : track->captions())
     {
         // Line number
-        out << QString::number(lineNumber++) << Qt::endl;
+        out << QString::number(lineNumber++) << "\n";
 
         // Time start --> time end
         out << QTime::fromMSecsSinceStartOfDay(caption->offset()).toString("hh:mm:ss,zzz");
         out << " --> ";
         out << QTime::fromMSecsSinceStartOfDay(caption->offset() + caption->duration()).toString("hh:mm:ss,zzz");
-        out << Qt::endl;
+        out << "\n";
 
         // Actual text
-        out << caption->text() << Qt::endl;
+        out << caption->text() << "\n";
     }
 
     if (out.status() != QTextStream::Ok)
