@@ -1,0 +1,26 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - uses: docker://lpenz/ghaction-cmake:latest
+      with:
+        dependencies_debian: 'qt5-default, qt5base5-dev-tools, libtinyxml2-dev'
+
+  coveralls:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: docker://lpenz/ghaction-cmake:latest
+        with:
+          preset: coverage
+      # ghaction-cmake works well with the github action
+      # provided by coveralls if you pass path-to-lcov:
+      - uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.COVERALLS_TOKEN }}
+          path-to-lcov: lcov.info
