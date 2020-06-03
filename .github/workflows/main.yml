@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Git
         uses: actions/checkout@v2
         with:
-          submodules: true
+          submodules: "recursive"
       
       - name: Setup build directory
         run: mkdir build
