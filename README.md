@@ -1,5 +1,7 @@
 # qytlib
 
+![CI](https://github.com/PhilInTheGaps/qytlib/workflows/CI/badge.svg)
+
 A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/YoutubeExplode) 5.0.5.
 
 ## Usage
