@@ -16,13 +16,13 @@ jobs:
           submodules: true
       
       - name: Setup build directory
-        run: mkdir build && cd build
+        run: mkdir build
       
       - name: Run CMake
-        run: cmake .. -G "Unix Makefiles"
+        run: cd build && cmake .. -G "Unix Makefiles"
       
       - name: Make
-        run: make -j$(nproc)
+        run: cd build && make -j$(nproc)
       
       - name: Make Test
-        run: make test
+        run: cd build && make test
