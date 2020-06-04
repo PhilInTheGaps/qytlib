@@ -9,9 +9,9 @@ jobs:
     script:
     - mkdir build
     - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -DCOVERALLS=ON
+    - cmake .. -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -DQYTLIB_COVERALLS=ON
     - cd ..
-    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/ -j$(nproc)
+    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/
     - cd build && make coveralls
     - cd .. && sonar-scanner
   - os: osx
