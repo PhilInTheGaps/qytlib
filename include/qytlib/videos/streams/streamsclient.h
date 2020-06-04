@@ -52,9 +52,19 @@ private:
     /// if data can not be fetched from the embedded page.
     void getStreamContextFromWatchPage(const VideoId& videoId, StreamContext *streamContext);
 
-    void loadStreamContext(StreamContext *streamContext, Responses::PlayerResponse *playerResponse, Responses::PlayerSource *playerSource, QVector<Responses::IStreamInfoProvider *> streams);
+    void loadStreamContext(StreamContext *streamContext, const Responses::PlayerResponse *playerResponse,
+                           const Responses::PlayerSource *playerSource, const QVector<Responses::IStreamInfoProvider *> &streams);
 
-    void loadManifest(StreamManifest *streamManifest, StreamContext *streamContext);
+    void loadManifest(StreamManifest *streamManifest, const StreamContext *streamContext);
+
+    void processStreamContext(const VideoId &videoId, StreamManifest *streamManifest,
+                                           StreamContext *streamContext, int *tries);
+
+    /// Build stream info for muxed, video or audio, depending on the codecs present.
+    IStreamInfo *buildStreamInfo(const Responses::IStreamInfoProvider *streamInfo, const StreamContext *streamContext,
+                                 int tag, Container *container, FileSize *fileSize, Bitrate *bitrate);
+
+    static QString getStreamUrl(const Responses::IStreamInfoProvider *streamInfo, const StreamContext *streamContext);
 };
 
 class StreamContext : public Responses::IResponse

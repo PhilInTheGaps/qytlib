@@ -13,7 +13,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Core Quick Network REQUIRED)
+find_package(Qt5 COMPONENTS Core Quick Network Multimedia REQUIRED)
 
 set(SOURCES
   main.cpp
@@ -35,4 +35,4 @@ target_include_directories(demo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 target_compile_definitions(demo
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(demo
-  PRIVATE Qt5::Core Qt5::Quick Qt5::Network qytlib)
+  PRIVATE Qt5::Core Qt5::Quick Qt5::Network Qt5::Multimedia qytlib)

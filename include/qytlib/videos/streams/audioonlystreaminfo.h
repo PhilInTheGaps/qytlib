@@ -18,6 +18,12 @@ public:
             : IStreamInfo(tag, url, container, fileSize, bitrate, parent), IAudioStreamInfo(audioCodec) {};
 
     inline operator const QString() const { return QString("Audio-only (%1 | %2)").arg(tag()).arg(*container()); }
+
+    /// Get the AudioOnlyStreamInfo* with the highest bitrate
+    static AudioOnlyStreamInfo* withHighestBitrate(QVector<AudioOnlyStreamInfo*> vector) {
+        std::sort(vector.begin(), vector.end(), &AudioOnlyStreamInfo::compareBitrateGreater);
+        return vector.isEmpty() ? nullptr : vector.first();
+    }
 };
 
 }

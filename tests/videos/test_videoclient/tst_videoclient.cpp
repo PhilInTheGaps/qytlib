@@ -50,7 +50,7 @@ void TestVideoClient::getCorrectMetadata()
     // Engagement
     QVERIFY2(video->engagement(), "Engagement returns a nulltr!");
     QVERIFY(video->engagement()->viewCount() >= 134);
-    QVERIFY(video->engagement()->likeCount() >= 5);
+    QVERIFY(video->engagement()->likeCount() >= 2);
     QVERIFY(video->engagement()->dislikeCount() >= 0);
 }
 

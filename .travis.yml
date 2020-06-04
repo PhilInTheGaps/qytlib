@@ -32,6 +32,7 @@ addons:
     packages:
     - qt5-default
     - qtdeclarative5-dev
+    - qtmultimedia5-dev
     - libtinyxml2-dev
   homebrew:
     update: true

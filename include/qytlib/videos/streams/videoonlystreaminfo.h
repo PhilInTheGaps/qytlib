@@ -21,6 +21,12 @@ public:
           IVideoStreamInfo(videoCodec, videoQualityLabel, videoQuality, videoResolution, frameRate) {}
 
     inline operator const QString() const { return QString("Video-only (%1 | %2 | %3)").arg(QString::number(tag()), videoQualityLabel(), *container()); }
+
+    /// Get the VideoOnlyStreamInfo* with the highest bitrate
+    static VideoOnlyStreamInfo* withHighestBitrate(QVector<VideoOnlyStreamInfo*> vector) {
+        std::sort(vector.begin(), vector.end(), &VideoOnlyStreamInfo::compareBitrateGreater);
+        return vector.isEmpty() ? nullptr : vector.first();
+    }
 };
 
 }

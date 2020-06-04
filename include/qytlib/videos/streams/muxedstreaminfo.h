@@ -23,6 +23,12 @@ public:
           IVideoStreamInfo(videoCodec, videoQualityLabel, videoQuality, videoResolution, frameRate) {}
 
     inline operator const QString() const { return QString("Muxed (%1 | %2 | %3)").arg(QString::number(tag()), videoQualityLabel(), *container()); }
+
+    /// Get the MuxedStreamInfo* with the highest bitrate
+    static MuxedStreamInfo* withHighestBitrate(QVector<MuxedStreamInfo*> vector) {
+        std::sort(vector.begin(), vector.end(), &MuxedStreamInfo::compareBitrateGreater);
+        return vector.isEmpty() ? nullptr : vector.first();
+    }
 };
 
 }

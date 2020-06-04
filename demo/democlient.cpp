@@ -1,28 +1,40 @@
 #include "democlient.h"
 
+using namespace YouTube::Videos;
+
 DemoClient::DemoClient(QObject *parent) : QObject(parent)
 {
     networkManager = new QNetworkAccessManager(this);
     networkManager->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
 
-    videoClient = new YouTube::Videos::VideoClient(networkManager, this);
+    videoClient = new VideoClient(networkManager, this);
 }
 
 void DemoClient::loadVideo(const QString &url)
 {
     auto *video = videoClient->getVideo(url);
-    connect(video, &YouTube::Videos::Video::ready, this, &DemoClient::onVideoLoaded);
+    connect(video, &Video::ready, this, &DemoClient::onVideoLoaded);
+
+    auto *manifest = videoClient->streams()->getManifest(url);
+    connect(manifest, &Streams::StreamManifest::ready, this, &DemoClient::onManifestLoaded);
 }
 
 void DemoClient::onVideoLoaded()
 {
-    auto *video = qobject_cast<YouTube::Videos::Video*>(sender());
-
+    auto *video = qobject_cast<Video*>(sender());
     if (!video) return;
 
-    m_title = video->title();
-    m_author = video->author();
-    m_description = video->description();
-
+    m_video = video;
     emit videoInfoChanged();
+}
+
+void DemoClient::onManifestLoaded()
+{
+    auto *manifest = qobject_cast<Streams::StreamManifest*>(sender());
+    if (!manifest) return;
+
+    auto *info = Streams::MuxedStreamInfo::withHighestBitrate(manifest->muxed());
+    m_stream = info->url();
+
+    emit streamChanged();
 }

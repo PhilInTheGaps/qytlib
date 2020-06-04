@@ -9,33 +9,32 @@
 class DemoClient : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString title READ title NOTIFY videoInfoChanged)
-    Q_PROPERTY(QString author READ author NOTIFY videoInfoChanged)
-    Q_PROPERTY(QString description READ description NOTIFY videoInfoChanged)
+    Q_PROPERTY(QObject* video READ video NOTIFY videoInfoChanged)
+    Q_PROPERTY(QString stream READ stream NOTIFY streamChanged)
 
 public:
     explicit DemoClient(QObject *parent = nullptr);
 
-    QString title() const { return m_title; }
-    QString author() const { return m_author; }
-    QString description() const { return m_description; }
+    QObject *video() const { return m_video; }
+    QString stream() const { return m_stream; }
 
 public slots:
     void loadVideo(const QString &url);
 
 signals:
     void videoInfoChanged();
+    void streamChanged();
 
 private:
     QNetworkAccessManager *networkManager = nullptr;
     YouTube::Videos::VideoClient *videoClient = nullptr;
 
-    QString m_title;
-    QString m_author;
-    QString m_description;
+    QObject *m_video = nullptr;
+    QString m_stream;
 
 private slots:
     void onVideoLoaded();
+    void onManifestLoaded();
 
 };
 
