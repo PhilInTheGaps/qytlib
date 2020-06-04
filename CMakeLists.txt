@@ -12,6 +12,7 @@ include(ide)
 include(AddQGumboParser)
 include(GNUInstallDirs)
 include(CTest)
+include(CMakePrintHelpers)
 
 # turn on automatic invocation of the MOC
 set(CMAKE_AUTOMOC ON)
@@ -22,10 +23,15 @@ endif()
 
 option(QYTLIB_BUILD_TESTS "Build tests" ON)
 option(QYTLIB_BUILD_DEMO "Build demo application" ON)
-option(COVERALLS "Turn on coveralls support" OFF)
-option(COVERALLS_UPLOAD "Upload the generated coveralls json" ON)
+option(QYTLIB_COVERALLS "Turn on coveralls support" OFF)
+option(QYTLIB_COVERALLS_UPLOAD "Upload the generated coveralls json" ON)
 
-if (COVERALLS)
+cmake_print_variables(QYTLIB_BUILD_TESTS)
+cmake_print_variables(QYTLIB_BUILD_DEMO)
+cmake_print_variables(QYTLIB_COVERALLS)
+
+if (QYTLIB_COVERALLS)
+  cmake_print_variables(QYTLIB_COVERALLS_UPLOAD)
 	include(coveralls/cmake/Coveralls)
 	coveralls_turn_on_coverage()
 endif()
@@ -92,10 +98,10 @@ endif()
 
 # coveralls report
 
-if (COVERALLS)
+if (QYTLIB_COVERALLS)
 	coveralls_setup(
     "${QYTLIB_SOURCES}" 
-    ${COVERALLS_UPLOAD}                 
+    ${QYTLIB_COVERALLS_UPLOAD}                 
     # "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake"
   )
 endif()

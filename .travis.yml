@@ -4,23 +4,16 @@ jobs:
   - os: linux
     compiler: gcc
     dist: bionic
+    git:
+      depth: false
     script:
     - mkdir build
     - cd build
-    - cmake .. -G "Unix Makefiles"
+    - cmake .. -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -DCOVERALLS=ON
     - cd ..
-    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/
-    - make test
-    - sonar-scanner
-  - os: linux
-    compiler: gcc
-    dist: xenial
-    script:
-    - mkdir build
-    - cd build
-    - cmake .. -G "Unix Makefiles"
-    - make -j$(nproc)
-    - make test
+    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/ -j$(nproc)
+    - cd build && make coveralls
+    - cd .. && sonar-scanner
   - os: osx
     before_install:
     - brew link qt --force
@@ -30,12 +23,14 @@ jobs:
     - cmake .. -G "Unix Makefiles" -DQt5_DIR=$(brew --prefix qt)/lib/cmake/Qt5
     - make -j$(sysctl -n hw.physicalcpu)
     - make test
+cache:
+  directories:
+    - '$HOME/.sonar/cache'
 addons:
   apt:
     update: true
     packages:
     - qt5-default
-    - qtbase5-dev-tools
     - qtdeclarative5-dev
     - libtinyxml2-dev
   homebrew:
@@ -44,9 +39,9 @@ addons:
     - qt
     - tinyxml2
   sonarcloud:
-    organization: rophil
+    organization: "rophil"
     token:
-        secure: rWnkgiAi09/oqWTnaQfGEn7H3fZKYtUeVNC5kV2iTVsXMaMJqKvMfyDYEwa8oWk657sxaTvvTB7UlARtoDzg0irVOS+l3m+VOiBqGw6o6nAthesMxDewppAQNnLnQZZErX2kfjhaFFkHUr6IDmwci3kr4pZcDqcVcaWvl2iBsZ1E8GYJof2FYhxAWyzMfYYlJdp4Y/TRORIrJV5FczyDcWWjpjjJLWgEh/FYCyoOaYeBTb7V8i2fsyZDQqQiFaUIvb6XKl1/sCafajF2h8gUE5Q3Ccp2HW1S3JFBqEOn3kbbKsPVJwHrrje3vCl9uGVzgw2t9P5l8h0jL9/DxNROhEgr8RoMxTwLUhGvv4lYLI74Or53SZw3THz7TFIoUjKhLM05Uva6p0pgS48n9x9vkaVstknpw47tgJfeNa1/9sIPE28ADjwJlx6hg7+be5P/F54NzJRRnKBRGlJX/sfLNVE+TlztUeatLx/tbP/9XFXWVBwDSBGmF4UQdyxG3Yp5gzb4mGZQZ0eqga3bLHzxKcMAl6r3g8SuRq+8uhvMPhCEDwT+JWfYeMPMiyWnbczWsyWx2Mn63t3ciRycdqSLu3MWutuyN0vF+hAslZPvr1XO9ZxoMD352hqpxcs6pLsH931CbnTiCV0gSjqQYXeDcKGPfgzBSHZAO1iRCCLR5NE=
+      secure: "uqMh1RhLjkeR1F6tkwNHc1NcRnaPI0E27P2Uli1GMaMEnZQfswlsKMkmRV0xRsglXKvAvkGuk9camWa8TRR/4LXzV3yOFm5RODW2Jh3TEkMkk90Tvq3hH2B6+bs5eemPMKL64qYa8+5SYEnwNvSBb/o4bJgScvhk7yTKct1IwU2Qu9PCbpbf3gbtZmguoAe8M+tf0iyvf1IMziewXVTAp2eTqgVeV2Zo/LwAgYogRdd3xR0lapatA7y3ZFVxjxx3HP3mFNlRbh9Hu+4chqQg7laFtodC6aeCVq0grTogF6gi/fIIbuQuqCSeqr/SLPtENdktlx0g60+QZxzCz8QWUydFZviRl6M6y1CE3iTp6qRAJzD7h0jbjHUAs77C9RLNFE3xKWYKrDCCaWkDRxDf8IvwHX5F8x3i0gb1CJ+PWxOuCX5sbEhIV2+uD2Aqrxxe4r+qy+0W7QQj/DvTSvyzWMxuejCfDhNaKdNFQi2csWtq8UpjfktsvdA6OCM9FHt5CubtGx3WAM/upy9x84IHfvopZXXAB9xBHk72wI5YTOtVCtRg2ePgxlH2lwfZzArI9WaMB+iNLCNVvaZ/RNb6wRpZzjtzu9NEr53eTrNVrDXooTdB0qaJn/pYb41fTtTUo8BAqXWEjyBhLkc/gPGkfH0/zaOROvF6C+JtUF0tCRg="
 notifications:
   email:
     recipients:
