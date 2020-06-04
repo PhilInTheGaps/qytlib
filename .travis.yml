@@ -36,7 +36,7 @@ addons:
     packages:
     - qt5-default
     - qtbase5-dev-tools
-    - libqt5quick5
+    - qtdeclarative5-dev
     - libtinyxml2-dev
   homebrew:
     update: true
