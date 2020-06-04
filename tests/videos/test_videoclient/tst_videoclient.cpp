@@ -15,7 +15,7 @@ void TestVideoClient::initTestCase()
 
 void TestVideoClient::getCorrectMetadata()
 {
-    const auto videoUrl = "https://www.youtube.com/watch?v=AI7ULzgf8RU";
+    const QString videoUrl = "https://www.youtube.com/watch?v=AI7ULzgf8RU";
     auto *video = client->getVideo(videoUrl);
 
     QSignalSpy spy(video, &YouTube::Videos::Video::ready);
@@ -25,10 +25,10 @@ void TestVideoClient::getCorrectMetadata()
     QVERIFY2(isReady, "Video::ready() took longer than 5 seconds to be emitted.");
 
     // General
-    QCOMPARE(video->id(), "AI7ULzgf8RU");
+    QCOMPARE(video->id(), YouTube::Videos::VideoId(QStringLiteral("AI7ULzgf8RU")));
     QCOMPARE(video->url(), videoUrl);
-    QCOMPARE(video->title(), "Aka no Ha [Another] +HDHR");
-    QCOMPARE(video->author(), "Tyrrrz");
+    QCOMPARE(video->title(), QStringLiteral("Aka no Ha [Another] +HDHR"));
+    QCOMPARE(video->author(), QStringLiteral("Tyrrrz"));
     QCOMPARE(video->keywords(), QStringList({ "osu", "mouse", "rhythm game" }));
 
     // Duration

@@ -69,8 +69,8 @@ void TestCipher::swap()
 
 void TestCipher::decipher()
 {
-    auto signature = "abcdefg.hijklmop";
-    auto solution  = "lkjih.gfeacbd";
+    QString signature = "abcdefg.hijklmop";
+    QString solution  = "lkjih.gfeacbd";
 
     QVector<YouTube::Cipher::ICipherOperation*> operations = {
         new YouTube::Cipher::SwapCipherOperation(3, this), // dbcaefg.hijklmop

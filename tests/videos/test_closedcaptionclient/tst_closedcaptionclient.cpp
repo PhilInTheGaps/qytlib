@@ -101,8 +101,8 @@ void TestClosedCaptionClient::get_specific()
     QVERIFY2(captionPart, "CaptionPart for specified time not found");
 
     // Verify data
-    QCOMPARE(caption->text(), "know I worked really hard on not doing");
-    QCOMPARE(captionPart->text(), " hard");
+    QCOMPARE(caption->text(), QStringLiteral("know I worked really hard on not doing"));
+    QCOMPARE(captionPart->text(), QStringLiteral(" hard"));
 }
 
 void TestClosedCaptionClient::writeToDevice_data()
