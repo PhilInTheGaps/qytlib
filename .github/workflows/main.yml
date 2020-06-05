@@ -4,8 +4,17 @@ jobs:
   build-ubuntu:
     runs-on: ubuntu-latest
     steps:
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: ${{ runner.os }}-QtCache
+
       - name: Get Qt
         uses: jurplel/install-qt-action@v2
+        with:
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
         
       - name: Install other dependencies
         run: sudo apt-get install cmake libtinyxml2-dev
@@ -30,15 +39,25 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v1
+        with:
+          path: ../Qt
+          key: ${{ runner.os }}-QtCache
+      
       - name: Get Qt
         uses: jurplel/install-qt-action@v2
         with:
-          arch: "win64_mingw73"
+          version: "5.15.0"
+          arch: "win64_mingw81"
+          aqtversion: ">=0.9.0"
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
         
       - name: Install other dependencies 
         uses: crazy-max/ghaction-chocolatey@v1
         with:
-          args: install cmake
+          args: install cmake openssl
           
       - name: Print software versions
         run: cmake --version && g++ --version && ming32-make --version
