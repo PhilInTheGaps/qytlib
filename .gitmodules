@@ -4,3 +4,6 @@
 [submodule "cmake/coveralls"]
 	path = cmake/coveralls
 	url = https://github.com/JoakimSoderberg/coveralls-cmake
+[submodule "thirdparty/tinyxml2/tinyxml2"]
+	path = thirdparty/tinyxml2/tinyxml2
+	url = https://github.com/leethomason/tinyxml2

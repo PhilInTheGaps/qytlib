@@ -1,10 +1,8 @@
 name: CI
 on: [push, pull_request]
 jobs:
-  build:
+  build-ubuntu:
     runs-on: ubuntu-latest
-    env:
-      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
     steps:
       - name: Get Qt
         uses: jurplel/install-qt-action@v2
@@ -25,6 +23,34 @@ jobs:
       
       - name: Make
         run: cd build && make -j$(nproc)
+      
+      - name: Tests
+        run: cd build && make test
+        
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Get Qt
+        uses: jurplel/install-qt-action@v2
+        
+      - name: Install other dependencies 
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install cmake
+
+      - name: Checkout Git
+        uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
+      
+      - name: Setup build directory
+        run: mkdir build
+      
+      - name: Run CMake
+        run: cd build && cmake .. -G "MinGW Makefiles"
+      
+      - name: Make
+        run: cd build && make
       
       - name: Tests
         run: cd build && make test

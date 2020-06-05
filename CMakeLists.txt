@@ -4,6 +4,7 @@ project(qytlib)
 
 # find includes in the build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(THIRDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 
 # set cmake module path
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
@@ -26,10 +27,6 @@ option(QYTLIB_BUILD_DEMO "Build demo application" ON)
 option(QYTLIB_COVERALLS "Turn on coveralls support" OFF)
 option(QYTLIB_COVERALLS_UPLOAD "Upload the generated coveralls json" ON)
 
-cmake_print_variables(QYTLIB_BUILD_TESTS)
-cmake_print_variables(QYTLIB_BUILD_DEMO)
-cmake_print_variables(QYTLIB_COVERALLS)
-
 if (QYTLIB_COVERALLS)
   cmake_print_variables(QYTLIB_COVERALLS_UPLOAD)
 	include(coveralls/cmake/Coveralls)
@@ -37,7 +34,15 @@ if (QYTLIB_COVERALLS)
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Core Network)
-find_library(TINYXML_DIR tinyxml2 REQUIRED)
+
+# Try to find tinyxml2,
+# if it can not be found, compile from source.
+find_library(TINYXML_DIR tinyxml2)
+add_subdirectory(thirdparty/tinyxml2)
+
+cmake_print_variables(QYTLIB_BUILD_TESTS)
+cmake_print_variables(QYTLIB_BUILD_DEMO)
+cmake_print_variables(QYTLIB_COVERALLS)
 
 set(QYTLIB_SOURCES
   src/common/engagement.cpp
@@ -78,7 +83,7 @@ target_include_directories(qytlib
   ${CMAKE_CURRENT_LIST_DIR}/thirdparty/QGumboParser/QGumboParser
 )
 
-target_link_libraries(qytlib Qt5::Core Qt5::Network qgumboparser tinyxml2)
+target_link_libraries(qytlib PRIVATE Qt5::Core Qt5::Network qgumboparser tinyxml2)
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(
