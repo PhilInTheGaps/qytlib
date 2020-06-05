@@ -32,11 +32,16 @@ jobs:
     steps:
       - name: Get Qt
         uses: jurplel/install-qt-action@v2
+        with:
+          arch: "win64_mingw73"
         
       - name: Install other dependencies 
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: install cmake
+          
+      - name: Print software versions
+        run: cmake --version && g++ --version && ming32-make --version
 
       - name: Checkout Git
         uses: actions/checkout@v2
@@ -50,7 +55,7 @@ jobs:
         run: cd build && cmake .. -G "MinGW Makefiles"
       
       - name: Make
-        run: cd build && make
+        run: cd build && mingw32-make
       
       - name: Tests
-        run: cd build && make test
+        run: cd build && mingw32-make test
