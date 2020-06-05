@@ -6,13 +6,15 @@ jobs:
     dist: bionic
     git:
       depth: false
+    env:
+      - secure: "iY+zgwsZAw5hmofYocPqlAf1m56tuV4QsY1Zk+BUrX0ZccFAMI2LitaRzYOzTu9WN0U4ubsV2zvBJPCdNc1acV669/v01b0CGxHqdVu3gBQQJIVTcW1Fgeeb4V9Rb1GlejmCn7qLqmvCEpNWpRkXAcyCQLvebuT8K0SD5zEzQI/y/txMCh+AOmhIxUZkbiDh1Wa2qXJgSPzrXD6jTtBq6eOiTBsAQzQIyqqJ1L4DdWVTZaBcK6kTUR8OahGBCLeo9vDEJgLS0mULTXl8r6le24vX3KVry85Xd9C9swrRlMAPEW2uKcAZBWz2yNV9pF1V5Z4jGqbPl8hM9fn/YBMBUcTm7F56gF2H4B1oZNbsp2V4WJ/esyTHvQXOo6jSUy/rpr+r7AbD2AzdaEYliKp3wm71Jn37+vy3RP1+eiACuXx4cTPgebpkxv/f6JuM6Gzeb5Gz/ekDw7cq9+bOB8rY/7rQjft+o0T1TnlQ0f4CrMvv1APSbIBbibNJQiIpZg/n3Kuj15e5b0TvKbGoxjMLnKWcnNTYjGyjfo+B+LsHYhyTNN3+H5Kbq8lJC0vjB+p4GGt9XcPWNv/BYMLvSng/M4CJR7D/tJcHQdPqZA5Dey8tYfOVCyx18PWUVfzPjFped2CXW7YPbhLVm5uy1co0nlPIvOX+D4BA+qt+ktxHXJ8="
     script:
     - mkdir build
     - cd build
-    - cmake .. -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -DQYTLIB_COVERALLS=ON
+    - cmake .. -DCMAKE_BUILD_TYPE=Debug -G "Unix Makefiles" -DQYTLIB_COVERALLS=ON || travis_terminate 1;
     - cd ..
-    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/
-    - cd build && make coveralls
+    - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/ || travis_terminate 1;
+    - cd build && make coveralls || travis_terminate 1;
     - cd .. && sonar-scanner
   - os: osx
     before_install:
@@ -20,8 +22,8 @@ jobs:
     script:
     - mkdir build
     - cd build
-    - cmake .. -G "Unix Makefiles" -DQt5_DIR=$(brew --prefix qt)/lib/cmake/Qt5
-    - make -j$(sysctl -n hw.physicalcpu)
+    - cmake .. -G "Unix Makefiles" -DQt5_DIR=$(brew --prefix qt)/lib/cmake/Qt5 || travis_terminate 1;
+    - make -j$(sysctl -n hw.physicalcpu) || travis_terminate 1;
     - make test
 cache:
   directories:
