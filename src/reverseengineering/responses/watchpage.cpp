@@ -47,6 +47,7 @@ WatchPage *WatchPage::get(QNetworkAccessManager *networkManager, const YouTube::
 void WatchPage::parse(const QByteArray &raw)
 {
     qCDebug(ytWatchPage()) << "parse()";
+    qCDebug(ytWatchPage()) << raw;
 
     auto doc = QGumboDocument::parse(raw);
     auto root = doc.rootNode();
@@ -70,12 +71,12 @@ void WatchPage::parse(const QByteArray &raw)
     }
 
     // Likes
-    auto likeLabel = Utils::RegExUtils::regexMatch(raw, "like-button.*\\>(.*)\\<\\/span");
+    auto likeLabel = Utils::RegExUtils::regexMatch(raw, "\"label\"\\s*:\\s*\"([\\d,\\.]+) likes", 1);
     likeLabel.replace(',', "").replace(QRegularExpression("\\D"), ""); // Strip non digits
     m_videoLikeCount = likeLabel.toLong();
 
     // Dislikes
-    auto dislikeLabel = Utils::RegExUtils::regexMatch(raw, "dislike-button.*\\>(.*)\\<\\/span");
+    auto dislikeLabel = Utils::RegExUtils::regexMatch(raw, "\"label\"\\s*:\\s*\"([\\d,\\.]+) dislikes");
     dislikeLabel.replace(',', "").replace(QRegularExpression("\\D"), ""); // Strip non digits
     m_videoDislikeCount = dislikeLabel.toLong();
 
