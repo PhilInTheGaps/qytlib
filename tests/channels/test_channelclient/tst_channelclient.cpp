@@ -20,7 +20,7 @@ void TestChannelClient::getCorrectMetadata()
     bool isReady = spy.wait(5000);
     QVERIFY2(isReady, "Channel::ready() took longer than 5 seconds to be emitted.");
 
-    QCOMPARE(QString(channel->id()), "UCEnBXANsKmyj2r9xVyKoDiQ");
+    QCOMPARE(QString(channel->id()), QStringLiteral("UCEnBXANsKmyj2r9xVyKoDiQ"));
     QCOMPARE(channel->url(), channelUrl);
     QCOMPARE(channel->title(), QStringLiteral("Tyrrrz"));
     QVERIFY2(!channel->logoUrl().isEmpty(), "Logo URL is empty.");
