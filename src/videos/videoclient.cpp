@@ -5,7 +5,6 @@
 
 Q_LOGGING_CATEGORY(ytVideoClient, "yt.video.client")
 
-using namespace YouTube;
 using namespace YouTube::Videos;
 
 VideoClient::VideoClient(QNetworkAccessManager *networkManager, QObject *parent)
@@ -52,6 +51,7 @@ Video* VideoClient::getVideo(const VideoId &videoId)
 
             video->setTitle(playerResponse->videoTitle());
             video->setAuthor(playerResponse->videoAuthor());
+            video->setChannelId(playerResponse->videoChannelId());
             video->setUploadDate(playerResponse->videoUploadDate());
             video->setDescription(playerResponse->description());
             video->setDuration(playerResponse->videoDuration());

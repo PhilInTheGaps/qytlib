@@ -43,12 +43,14 @@ add_subdirectory(thirdparty/tinyxml2)
 cmake_print_variables(QYTLIB_BUILD_TESTS)
 cmake_print_variables(QYTLIB_BUILD_DEMO)
 cmake_print_variables(QYTLIB_COVERALLS)
+cmake_print_variables(QYTLIB_COVERALLS_UPLOAD)
 
 set(QYTLIB_SOURCES
   src/common/engagement.cpp
   src/reverseengineering/cipher/reversecipheroperation.cpp
   src/reverseengineering/cipher/slicecipheroperation.cpp
   src/reverseengineering/cipher/swapcipheroperation.cpp
+  src/reverseengineering/responses/channelpage.cpp
   src/reverseengineering/responses/closedcaptiontrackresponse.cpp
   src/reverseengineering/responses/dashmanifest.cpp
   src/reverseengineering/responses/embedpage.cpp
@@ -71,6 +73,9 @@ set(QYTLIB_SOURCES
   src/videos/streams/streamsclient.cpp
   src/videos/videoclient.cpp
   src/videos/videoid.cpp
+  src/channels/channelid.cpp
+  src/channels/username.cpp
+  src/channels/channelclient.cpp
 )
 
 add_library(qytlib STATIC ${QYTLIB_SOURCES} ${QYTLIB_HEADERS})

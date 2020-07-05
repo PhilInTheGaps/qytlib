@@ -1,0 +1,3 @@
+add_subdirectory(test_channelid)
+add_subdirectory(test_channelclient)
+add_subdirectory(test_username)

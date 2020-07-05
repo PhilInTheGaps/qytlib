@@ -13,6 +13,7 @@
 #include "istreaminfoprovider.h"
 #include "qytlib/utils/stringutils.h"
 #include "qytlib/videos/closedcaptions/closedcaptiontrackinfo.h"
+#include "qytlib/channels/channelid.h"
 
 namespace YouTube {
 namespace Responses {
@@ -43,7 +44,7 @@ public:
 
     QDate videoUploadDate() const { return QDate::fromString(microformat()["playerMicroformatRenderer"].toObject()["uploadDate"].toString(), Qt::ISODate); }
 
-    QString videoChannelId() const { return videoDetails()["channelId"].toString(); }
+    Channels::ChannelId videoChannelId() const { return Channels::ChannelId(videoDetails()["channelId"].toString()); }
 
     qint64 videoDuration() const { return videoDetails()["lengthSeconds"].toString().toLongLong(); }
 

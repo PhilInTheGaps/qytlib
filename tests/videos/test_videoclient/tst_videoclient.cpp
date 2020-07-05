@@ -30,6 +30,7 @@ void TestVideoClient::getCorrectMetadata()
     QCOMPARE(video->title(), QStringLiteral("Aka no Ha [Another] +HDHR"));
     QCOMPARE(video->author(), QStringLiteral("Tyrrrz"));
     QCOMPARE(video->keywords(), QStringList({ "osu", "mouse", "rhythm game" }));
+    QCOMPARE(video->channelId(), YouTube::Channels::ChannelId(QStringLiteral("UCEnBXANsKmyj2r9xVyKoDiQ")));
 
     // Duration
     int year, month, day;
@@ -48,7 +49,7 @@ void TestVideoClient::getCorrectMetadata()
     QVERIFY2(!video->thumbnails()->maxResUrl().isEmpty(), "No max resolution thumbnail available.");
 
     // Engagement
-    QVERIFY2(video->engagement(), "Engagement returns a nulltr!");
+    QVERIFY2(video->engagement(), "Engagement returns a nullptr!");
     QVERIFY(video->engagement()->viewCount() >= 134);
     QVERIFY(video->engagement()->likeCount() >= 2);
     QVERIFY(video->engagement()->dislikeCount() >= 0);

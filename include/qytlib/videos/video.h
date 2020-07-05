@@ -4,6 +4,7 @@
 #include "qytlib/videos/videoid.h"
 #include "qytlib/common/thumbnailset.h"
 #include "qytlib/common/engagement.h"
+#include "qytlib/channels/channelid.h"
 
 #include <QObject>
 #include <QDate>
@@ -49,6 +50,11 @@ public:
     Q_PROPERTY(QString author READ author WRITE setAuthor NOTIFY authorChanged)
     QString author() const { return m_author; }
     void setAuthor(const QString& author) { m_author = author; emit authorChanged(); }
+
+    /// Channel ID
+    Q_PROPERTY(Channels::ChannelId channelId READ channelId WRITE setChannelId NOTIFY channelIdChanged)
+    Channels::ChannelId channelId() const { return m_channelId; }
+    void setChannelId(const Channels::ChannelId& channelId) { m_channelId = channelId; emit channelIdChanged(); }
 
     /// Video upload date.
     Q_PROPERTY(QDate uploadDate READ uploadDate WRITE setUploadDate NOTIFY uploadDateChanged)
@@ -97,6 +103,7 @@ signals:
 
     void titleChanged();
     void authorChanged();
+    void channelIdChanged();
     void uploadDateChanged();
     void descriptionChanged();
     void durationChanged();
@@ -113,6 +120,7 @@ private:
     QString m_title;
     QString m_author;
     QString m_description;
+    Channels::ChannelId m_channelId;
     qint64 m_duration;
 
     QDate m_uploadDate;
