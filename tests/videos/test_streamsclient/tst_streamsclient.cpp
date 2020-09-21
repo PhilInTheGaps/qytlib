@@ -42,7 +42,7 @@ void TestStreamsClient::getManifest()
 
     QSignalSpy spy(manifest, &YouTube::Videos::Streams::StreamManifest::ready);
     QVERIFY2(spy.isValid(), "StreamManifest::ready() is not a valid signal.");
-    QVERIFY2(spy.wait(), "StreamManifest::read() took too long to receive.");
+    QVERIFY2(spy.wait(5000), "StreamManifest::read() took too long to receive.");
 
     if (shouldWork)
     {

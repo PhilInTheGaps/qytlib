@@ -21,7 +21,7 @@ void TestVideoClient::getCorrectMetadata()
     QSignalSpy spy(video, &YouTube::Videos::Video::ready);
     QVERIFY2(spy.isValid(), "Video::ready() is not a valid signal.");
 
-    bool isReady = spy.wait(5000);
+    bool isReady = spy.wait(3000);
     QVERIFY2(isReady, "Video::ready() took longer than 5 seconds to be emitted.");
 
     // General

@@ -5,7 +5,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=PhilInTheGaps_qytlib&metric=alert_status)](https://sonarcloud.io/dashboard?id=PhilInTheGaps_qytlib)
 [![Coverage](https://coveralls.io/repos/github/PhilInTheGaps/qytlib/badge.svg?branch=master)](https://coveralls.io/github/PhilInTheGaps/qytlib?branch=master)
 
-A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/YoutubeExplode) 5.0.5.
+A YouTube library for Qt, based on [YouTubeExplode](https://github.com/Tyrrrz/YoutubeExplode) 5.1.5.
 
 ## Usage
 

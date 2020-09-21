@@ -61,13 +61,13 @@ public:
     /// DASH streams don't have signatures
     QString signatureParameter() const override { return ""; }
 
-    qint64 contentLength() const override { return Utils::RegExUtils::regexMatch(url(), R"([/\?]clen[/=](\d+))").toLong(); }
+    qint64 contentLength() const override { return Utils::RegExUtils::match(url(), R"([/\?]clen[/=](\d+))").toLong(); }
 
     qint64 bitrate() const override { return m_bitrate; }
 
     QString mimeType() const override { return m_mimeType; }
 
-    QString container() const override { return QUrl::fromPercentEncoding(Utils::RegExUtils::regexMatch(url(), "mime[/=]\\w*%2F([\\w\\d]*)").toUtf8()); }
+    QString container() const override { return QUrl::fromPercentEncoding(Utils::RegExUtils::match(url(), "mime[/=]\\w*%2F([\\w\\d]*)").toUtf8()); }
 
     bool isAudioOnly() const override { return m_isAudioOnly; }
     void setIsAudioOnly(const bool& isAudioOnly) { m_isAudioOnly = isAudioOnly; }

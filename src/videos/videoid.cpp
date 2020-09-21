@@ -31,13 +31,13 @@ QString VideoId::normalize(const QString& idOrUrl)
 
     if (VideoId::isValid(idOrUrl)) return idOrUrl;
 
-    auto regularMatch = RegExUtils::regexMatch(idOrUrl, "youtube\\..+?/watch.*?v=(.*?)(?:&|/|$)");
+    auto regularMatch = RegExUtils::match(idOrUrl, "youtube\\..+?/watch.*?v=(.*?)(?:&|/|$)");
     if (!regularMatch.isEmpty() && VideoId::isValid(regularMatch)) return regularMatch;
 
-    auto shortMatch = RegExUtils::regexMatch(idOrUrl, "youtu\\.be/(.*?)(?:\\?|&|/|$)");
+    auto shortMatch = RegExUtils::match(idOrUrl, "youtu\\.be/(.*?)(?:\\?|&|/|$)");
     if (!shortMatch.isEmpty() && VideoId::isValid(shortMatch)) return shortMatch;
 
-    auto embedMatch = RegExUtils::regexMatch(idOrUrl, "youtube\\..+?/embed/(.*?)(?:\\?|&|/|$)");
+    auto embedMatch = RegExUtils::match(idOrUrl, "youtube\\..+?/embed/(.*?)(?:\\?|&|/|$)");
     if (!embedMatch.isEmpty() && VideoId::isValid(embedMatch)) return embedMatch;
 
     qCWarning(ytVideoId()) << "VideoId::normalize() Error: ID or URL" << idOrUrl << "is not valid.";

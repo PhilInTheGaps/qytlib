@@ -34,7 +34,7 @@ QString ChannelId::normalize(const QString &idOrUrl)
 
     if (ChannelId::isValid(idOrUrl)) return idOrUrl;
 
-    auto regularMatch = RegExUtils::regexMatch(idOrUrl, "youtube\\..+?/channel/(.*?)(?:\\?|&|/|$)");
+    auto regularMatch = RegExUtils::match(idOrUrl, "youtube\\..+?/channel/(.*?)(?:\\?|&|/|$)");
     if (!regularMatch.isEmpty() && ChannelId::isValid(regularMatch)) return regularMatch;
 
     qCWarning(ytChannelId()) << "ChannelId::normalize() Error: ID or URL" << idOrUrl << "is not valid.";

@@ -31,7 +31,7 @@ QString UserName::normalize(const QString &nameOrUrl)
 
     if (UserName::isValid(nameOrUrl)) return nameOrUrl;
 
-    auto regularMatch = RegExUtils::regexMatch(nameOrUrl, "youtube\\..+?/user/(.*?)(?:\\?|&|/|$)");
+    auto regularMatch = RegExUtils::match(nameOrUrl, "youtube\\..+?/user/(.*?)(?:\\?|&|/|$)");
     if (!regularMatch.isEmpty() && UserName::isValid(regularMatch)) return regularMatch;
 
     qCWarning(ytUserName()) << "UserName::normalize() Error: Name or URL" << nameOrUrl << "is not valid.";

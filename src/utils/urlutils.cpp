@@ -40,7 +40,7 @@ QString UrlUtils::setRouteParameter(const QString& url, const QString &key, cons
 {
     // Find existing parameter
     auto expression = QString("/(%1/?.*?)(?:/|$)").arg(QRegularExpression::escape(key));
-    auto group = RegExUtils::regexMatch(url, expression);
+    auto group = RegExUtils::match(url, expression);
     auto temp = url;
 
     // Parameter already set
@@ -65,6 +65,6 @@ QString UrlUtils::setRouteParameter(const QString& url, const QString &key, cons
 /// Extract the stream signature from the url.
 QString UrlUtils::getSignatureFromUrl(const QString &url)
 {
-    return Utils::RegExUtils::regexMatch(url, "/s/(.*?)(?:/|$)");
+    return Utils::RegExUtils::match(url, "/s/(.*?)(?:/|$)");
 }
 

@@ -11,6 +11,7 @@
 Q_LOGGING_CATEGORY(ytEmbedPage, "yt.responses.embedpage")
 
 using namespace YouTube::Responses;
+using namespace YouTube::Utils;
 
 EmbedPage::EmbedPage(const QByteArray &raw, QObject *parent) : IResponse(parent)
 {
@@ -43,7 +44,7 @@ void EmbedPage::parse(const QByteArray &raw)
     for (const auto& tag : scripts)
     {
         auto text = tag.innerText();
-        auto match = Utils::RegExUtils::regexMatch(text, "yt\\.setConfig\\({'PLAYER_CONFIG':(.*)}\\);");
+        auto match = RegExUtils::match(text, "yt\\.setConfig\\({.*'PLAYER_CONFIG':(.*})}\\);", 1);
 
         if (!match.isEmpty())
         {
@@ -55,5 +56,6 @@ void EmbedPage::parse(const QByteArray &raw)
         }
     }
 
+    qCWarning(ytEmbedPage()) << raw;
     qCWarning(ytEmbedPage()) << "Error: Could not load PlayerConfig from EmbedPage";
 }

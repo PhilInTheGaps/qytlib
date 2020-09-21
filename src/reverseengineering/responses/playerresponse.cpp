@@ -112,7 +112,7 @@ qint64 StreamInfoPR::contentLength() const
 {
     auto length = m_root["contentLength"].toString().toLong();
 
-    return length > 0 ? length : RegExUtils::regexMatch(url(), R"([\?&]clen=(\d+))").toLong();
+    return length > 0 ? length : RegExUtils::match(url(), R"([\?&]clen=(\d+))").toLong();
 }
 
 QString StreamInfoPR::container() const

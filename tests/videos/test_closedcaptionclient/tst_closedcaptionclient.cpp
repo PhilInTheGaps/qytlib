@@ -13,7 +13,7 @@ void TestClosedCaptionClient::initTestCase()
 void TestClosedCaptionClient::getManifest_data()
 {
     QTest::addColumn<QString>("videoId");
-    QTest::addRow("video 1") << "_QdPW8JrYzQ";
+    QTest::addRow("video 1") << "WOxr2dmLHLo";
     QTest::addRow("video 2") << "YltHGKX80Y8";
 }
 
@@ -36,7 +36,7 @@ void TestClosedCaptionClient::getManifest()
 void TestClosedCaptionClient::get_any_data()
 {
     QTest::addColumn<QString>("videoId");
-    QTest::addRow("video 1") << "_QdPW8JrYzQ";
+    QTest::addRow("video 1") << "WOxr2dmLHLo";
     QTest::addRow("video 2") << "YltHGKX80Y8";
 }
 
@@ -108,7 +108,7 @@ void TestClosedCaptionClient::get_specific()
 void TestClosedCaptionClient::writeToDevice_data()
 {
     QTest::addColumn<QString>("videoId");
-    QTest::addRow("video 1") << "_QdPW8JrYzQ";
+    QTest::addRow("video 1") << "WOxr2dmLHLo";
     QTest::addRow("video 2") << "YltHGKX80Y8";
 }
 

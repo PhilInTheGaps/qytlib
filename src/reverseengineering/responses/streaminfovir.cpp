@@ -9,7 +9,7 @@ qint64 StreamInfoVIR::contentLength() const
 
     if (length > 0) return length;
 
-    return Utils::RegExUtils::regexMatch(url(), "clen=(\\d+)").toLong();
+    return Utils::RegExUtils::match(url(), "clen=(\\d+)").toLong();
 }
 
 QString StreamInfoVIR::container() const
