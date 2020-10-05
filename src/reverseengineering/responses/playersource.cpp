@@ -24,7 +24,6 @@ PlayerSource::PlayerSource(const QByteArray &root, QObject *parent)
 PlayerSource *PlayerSource::get(QNetworkAccessManager *networkManager, const QString &url, QObject *parent)
 {
     qCDebug(ytPlayerSource()) << "PlayerSource::get()";
-
     qCDebug(ytPlayerSource()) << "URL:" << url;
 
     auto *playerSource = new PlayerSource(parent);
@@ -42,11 +41,6 @@ void PlayerSource::parse(const QByteArray &root)
 {
     qCDebug(ytPlayerSource()) << "PlayerSource::parse()";
     m_root = root;
-
-    QFile file("playersource-dump.js");
-    file.open(QIODevice::WriteOnly);
-    file.write(root);
-    file.close();
 
     m_deciphererFuncBody = getDeciphererFuncBody();
     m_deciphererDefinitionBody = getDeciphererDefinitionBody(m_deciphererFuncBody);

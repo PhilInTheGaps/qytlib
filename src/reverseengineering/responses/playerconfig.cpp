@@ -22,7 +22,7 @@ void PlayerConfig::parse(const QJsonObject &root)
 QString PlayerConfig::playerSourceUrl() const
 {
     auto assets = m_root["assets"].toObject();
-    return "https://youtube.com" + assets["js"].toString();
+    return QString("https://youtube.com%1").arg(assets["js"].toString());
 }
 
 void PlayerConfig::loadPlayerResponse()

@@ -64,6 +64,7 @@ set(QYTLIB_SOURCES
   src/utils/regexutils.cpp
   src/utils/stringutils.cpp
   src/utils/urlutils.cpp
+  src/utils/debugutils.cpp
   src/videos/closedcaptions/closedcaptionclient.cpp
   src/videos/closedcaptions/closedcaptionmanifest.cpp
   src/videos/closedcaptions/closedcaptiontrack.cpp

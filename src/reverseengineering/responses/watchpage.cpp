@@ -1,12 +1,11 @@
 #include "qytlib/reverseengineering/responses/watchpage.h"
+#include "qytlib/reverseengineering/responses/videoinforesponse.h"
+#include "qytlib/utils/regexutils.h"
 
 #include <QNetworkReply>
 
 #include <qgumbodocument.h>
 #include <qgumbonode.h>
-
-#include "qytlib/reverseengineering/responses/videoinforesponse.h"
-#include "qytlib/utils/regexutils.h"
 
 Q_LOGGING_CATEGORY(ytWatchPage, "yt.responses.watchpage")
 
@@ -38,7 +37,9 @@ WatchPage *WatchPage::get(QNetworkAccessManager *networkManager, const YouTube::
         reply->deleteLater();
 
         if (!watchPage->isOk())
+        {
             qCWarning(ytWatchPage()) << "Error: Could not parse WatchPage, something went wrong.";
+        }
     });
 
     return watchPage;
@@ -70,19 +71,27 @@ void WatchPage::parse(const QByteArray &raw)
     }
 
     // Likes
-    auto likeLabel = Utils::RegExUtils::match(raw, "\"label\"\\s*:\\s*\"([\\d,\\.]+) likes", 1);
+    auto likeLabel = Utils::RegExUtils::match(raw, R"("label"\s*:\s*"([\d,\.]+) likes)", 1);
     likeLabel.replace(',', "").replace(QRegularExpression("\\D"), ""); // Strip non digits
     m_videoLikeCount = likeLabel.toLong();
 
     // Dislikes
-    auto dislikeLabel = Utils::RegExUtils::match(raw, "\"label\"\\s*:\\s*\"([\\d,\\.]+) dislikes");
+    auto dislikeLabel = Utils::RegExUtils::match(raw, R"("label"\s*:\s*"([\d,\.]+) dislikes)", 1);
     dislikeLabel.replace(',', "").replace(QRegularExpression("\\D"), ""); // Strip non digits
     m_videoDislikeCount = dislikeLabel.toLong();
 
     // PlayerConfig
-    auto jsonRaw = Utils::RegExUtils::match(raw, "ytplayer\\.config = (\\{.*\\})\\;yt");
-    auto json = QJsonDocument::fromJson(jsonRaw.toUtf8()).object();
-    m_playerConfig = new PlayerConfig(json, this);
+    auto jsonRaw = Utils::RegExUtils::match(raw, R"(ytplayer\.config\s*=\s*(\{.*\}\});)", 1, false);
+
+    QJsonParseError error;
+    auto json = QJsonDocument::fromJson(jsonRaw.toUtf8(), &error);
+
+    if (json.isNull())
+    {
+        qCWarning(ytWatchPage()) << "Error during parsing of PlayerConfig:" << error.errorString();
+    }
+
+    m_playerConfig = new PlayerConfig(json.object(), this);
 
     emit ready();
 }

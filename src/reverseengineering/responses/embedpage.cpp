@@ -44,7 +44,7 @@ void EmbedPage::parse(const QByteArray &raw)
     for (const auto& tag : scripts)
     {
         auto text = tag.innerText();
-        auto match = RegExUtils::match(text, "yt\\.setConfig\\({.*'PLAYER_CONFIG':(.*})}\\);", 1);
+        auto match = RegExUtils::match(text, R"('PLAYER_CONFIG':\s*(\{.*\})\})", 1);
 
         if (!match.isEmpty())
         {
@@ -56,6 +56,5 @@ void EmbedPage::parse(const QByteArray &raw)
         }
     }
 
-    qCWarning(ytEmbedPage()) << raw;
     qCWarning(ytEmbedPage()) << "Error: Could not load PlayerConfig from EmbedPage";
 }

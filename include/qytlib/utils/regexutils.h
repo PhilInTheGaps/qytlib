@@ -13,7 +13,7 @@ namespace Utils {
 class RegExUtils
 {
 public:
-    static QString match(const QString& input, const QString& expression, const int &index = 1);
+    static QString match(const QString& input, const QString& expression, const int &index = 1, bool singleLine = true);
 
     static bool isMatch(const QString& input, const QString& expression);
 };

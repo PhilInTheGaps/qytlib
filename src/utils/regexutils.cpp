@@ -4,10 +4,13 @@ Q_LOGGING_CATEGORY(ytUtilsRegEx, "yt.utils.regex")
 
 using namespace YouTube::Utils;
 
-QString RegExUtils::match(const QString &input, const QString &expression, const int& index)
+QString RegExUtils::match(const QString &input, const QString &expression, const int& index, bool singleLine)
 {
     QRegularExpression re(expression);
-    re.setPatternOptions(QRegularExpression::PatternOption::DotMatchesEverythingOption);
+    if (singleLine)
+    {
+        re.setPatternOptions(QRegularExpression::PatternOption::DotMatchesEverythingOption);
+    }
 
     if (!re.isValid())
     {
@@ -18,7 +21,9 @@ QString RegExUtils::match(const QString &input, const QString &expression, const
     auto match = re.match(input, 0, QRegularExpression::MatchType::NormalMatch);
 
     if (match.hasMatch() && !match.captured(index).isEmpty())
+    {
         return match.captured(index);
+    }
 
     return "";
 }
