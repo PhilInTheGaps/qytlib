@@ -35,4 +35,4 @@ target_include_directories(demo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 target_compile_definitions(demo
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(demo
-  PRIVATE Qt5::Core Qt5::Quick Qt5::Network Qt5::Multimedia qytlib)
+  PRIVATE Qt5::Core Qt5::Quick Qt5::Network Qt5::Multimedia qyt)

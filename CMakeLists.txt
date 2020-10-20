@@ -79,9 +79,9 @@ set(QYTLIB_SOURCES
   src/channels/channelclient.cpp
 )
 
-add_library(qytlib STATIC ${QYTLIB_SOURCES} ${QYTLIB_HEADERS})
+add_library(qyt ${QYTLIB_SOURCES} ${QYTLIB_HEADERS})
 
-target_include_directories(qytlib
+target_include_directories(qyt
   PUBLIC
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
@@ -89,12 +89,12 @@ target_include_directories(qytlib
   ${CMAKE_CURRENT_LIST_DIR}/thirdparty/QGumboParser/QGumboParser
 )
 
-target_link_libraries(qytlib PRIVATE Qt5::Core Qt5::Network qgumboparser tinyxml2)
+target_link_libraries(qyt PRIVATE Qt5::Core Qt5::Network qgumboparser tinyxml2)
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(
-  TARGETS qytlib
-  EXPORT qytlib
+  TARGETS qyt
+  EXPORT qyt
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -110,11 +110,11 @@ endif()
 # coveralls report
 
 if (QYTLIB_COVERALLS)
-	coveralls_setup(
-    "${QYTLIB_SOURCES}" 
-    ${QYTLIB_COVERALLS_UPLOAD}                 
-    # "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake"
-  )
+    coveralls_setup(
+        "${QYTLIB_SOURCES}"
+        ${QYTLIB_COVERALLS_UPLOAD}
+        # "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake"
+    )
 endif()
 
 # demo application
