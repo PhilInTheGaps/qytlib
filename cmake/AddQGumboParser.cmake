@@ -64,11 +64,17 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif()
 
 # tests
-add_executable(test_qgumboparser
-  ${GUMBO_DIR}/../tests/tst_qgumboparsertest.h
-  ${GUMBO_DIR}/../tests/tst_qgumboparsertest.cpp
-)
 
-target_include_directories(test_qgumboparser PRIVATE ${CMAKE_SOURCE_DIR}/src)
-target_link_libraries(test_qgumboparser qgumboparser Qt5::Test)
-add_test(NAME test_qgumboparser COMMAND test_qgumboparser)
+if (QYTLIB_BUILD_TESTS)
+  enable_testing(true)
+  add_executable(test_qgumboparser
+    ${GUMBO_DIR}/../tests/tst_qgumboparsertest.h
+    ${GUMBO_DIR}/../tests/tst_qgumboparsertest.cpp
+  )
+
+  target_include_directories(test_qgumboparser PRIVATE ${CMAKE_SOURCE_DIR}/src)
+  target_link_libraries(test_qgumboparser qgumboparser Qt5::Test)
+  add_test(NAME test_qgumboparser COMMAND test_qgumboparser)
+endif()
+
+

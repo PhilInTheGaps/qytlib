@@ -9,6 +9,11 @@ set(THIRDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 # set cmake module path
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+option(QYTLIB_BUILD_TESTS "Build tests" ON)
+option(QYTLIB_BUILD_DEMO "Build demo application" ON)
+option(QYTLIB_COVERALLS "Turn on coveralls support" OFF)
+option(QYTLIB_COVERALLS_UPLOAD "Upload the generated coveralls json" ON)
+
 include(ide)
 include(AddQGumboParser)
 include(GNUInstallDirs)
@@ -21,11 +26,6 @@ set(CMAKE_AUTOMOC ON)
 if (${CMAKE_VERSION} VERSION_GREATER 3.11)
   add_compile_definitions(QT_DEPRECATED_WARNINGS)
 endif()
-
-option(QYTLIB_BUILD_TESTS "Build tests" ON)
-option(QYTLIB_BUILD_DEMO "Build demo application" ON)
-option(QYTLIB_COVERALLS "Turn on coveralls support" OFF)
-option(QYTLIB_COVERALLS_UPLOAD "Upload the generated coveralls json" ON)
 
 if (QYTLIB_COVERALLS)
   cmake_print_variables(QYTLIB_COVERALLS_UPLOAD)
